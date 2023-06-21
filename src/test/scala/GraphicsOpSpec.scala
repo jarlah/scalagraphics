@@ -44,7 +44,9 @@ class GraphicsOpSpec extends AnyFunSuite {
 
   test("setFont should call the proper method in Graphics api") {
     val graphics = mock[java.awt.Graphics2D]
-    GraphicsOp.setFont(new java.awt.Font("Arial", 1, 12)).run(GraphicsIOWrapper(graphics))
+    GraphicsOp
+      .setFont(new java.awt.Font("Arial", 1, 12))
+      .run(GraphicsIOWrapper(graphics))
     verify(graphics).setFont(new java.awt.Font("Arial", 1, 12))
   }
 
@@ -62,16 +64,19 @@ class GraphicsOpSpec extends AnyFunSuite {
 
   test("drawPolygon should call the proper method in Graphics api") {
     val graphics = mock[java.awt.Graphics2D]
-    GraphicsOp.drawPolygon(Array(0, 0, 10, 10), Array(0, 10, 10, 0), 4).run(GraphicsIOWrapper(graphics))
+    GraphicsOp
+      .drawPolygon(Array(0, 0, 10, 10), Array(0, 10, 10, 0), 4)
+      .run(GraphicsIOWrapper(graphics))
     verify(graphics).drawPolygon(Array(0, 0, 10, 10), Array(0, 10, 10, 0), 4)
   }
 
   test("fillPolygon should call the proper method in Graphics api") {
     val graphics = mock[java.awt.Graphics2D]
-    GraphicsOp.fillPolygon(Array(0, 0, 10, 10), Array(0, 10, 10, 0), 4).run(GraphicsIOWrapper(graphics))
+    GraphicsOp
+      .fillPolygon(Array(0, 0, 10, 10), Array(0, 10, 10, 0), 4)
+      .run(GraphicsIOWrapper(graphics))
     verify(graphics).fillPolygon(Array(0, 0, 10, 10), Array(0, 10, 10, 0), 4)
   }
-
 
   test("drawOval should call the proper method in Graphics api") {
     val graphics = mock[java.awt.Graphics2D]
@@ -99,13 +104,17 @@ class GraphicsOpSpec extends AnyFunSuite {
 
   test("drawRoundRect should call the proper method in Graphics api") {
     val graphics = mock[java.awt.Graphics2D]
-    GraphicsOp.drawRoundRect(0, 0, 10, 10, 0, 10).run(GraphicsIOWrapper(graphics))
+    GraphicsOp
+      .drawRoundRect(0, 0, 10, 10, 0, 10)
+      .run(GraphicsIOWrapper(graphics))
     verify(graphics).drawRoundRect(0, 0, 10, 10, 0, 10)
   }
 
   test("fillRoundRect should call the proper method in Graphics api") {
     val graphics = mock[java.awt.Graphics2D]
-    GraphicsOp.fillRoundRect(0, 0, 10, 10, 0, 10).run(GraphicsIOWrapper(graphics))
+    GraphicsOp
+      .fillRoundRect(0, 0, 10, 10, 0, 10)
+      .run(GraphicsIOWrapper(graphics))
     verify(graphics).fillRoundRect(0, 0, 10, 10, 0, 10)
   }
 
@@ -135,19 +144,25 @@ class GraphicsOpSpec extends AnyFunSuite {
 
   test("transform should call the proper method in Graphics api") {
     val graphics = mock[java.awt.Graphics2D]
-    GraphicsOp.transform(new java.awt.geom.AffineTransform()).run(GraphicsIOWrapper(graphics))
+    GraphicsOp
+      .transform(new java.awt.geom.AffineTransform())
+      .run(GraphicsIOWrapper(graphics))
     verify(graphics).transform(new java.awt.geom.AffineTransform())
   }
 
   test("clip should call the proper method in Graphics api") {
     val graphics = mock[java.awt.Graphics2D]
-    GraphicsOp.clip(new java.awt.Rectangle(0, 0, 10, 10)).run(GraphicsIOWrapper(graphics))
+    GraphicsOp
+      .clip(new java.awt.Rectangle(0, 0, 10, 10))
+      .run(GraphicsIOWrapper(graphics))
     verify(graphics).clip(new java.awt.Rectangle(0, 0, 10, 10))
   }
 
   test("setClip should call the proper method in Graphics api") {
     val graphics = mock[java.awt.Graphics2D]
-    GraphicsOp.setClip(new java.awt.Rectangle(0, 0, 10, 10)).run(GraphicsIOWrapper(graphics))
+    GraphicsOp
+      .setClip(new java.awt.Rectangle(0, 0, 10, 10))
+      .run(GraphicsIOWrapper(graphics))
     verify(graphics).setClip(new java.awt.Rectangle(0, 0, 10, 10))
   }
 
@@ -165,40 +180,84 @@ class GraphicsOpSpec extends AnyFunSuite {
 
   test("setPaint should call the proper method in Graphics api") {
     val graphics = mock[java.awt.Graphics2D]
-    GraphicsOp.setPaint(new java.awt.Color(0, 0, 0)).run(GraphicsIOWrapper(graphics))
+    GraphicsOp
+      .setPaint(new java.awt.Color(0, 0, 0))
+      .run(GraphicsIOWrapper(graphics))
     verify(graphics).setPaint(new java.awt.Color(0, 0, 0))
   }
 
   test("setComposite should call the proper method in Graphics api") {
     val graphics = mock[java.awt.Graphics2D]
-    GraphicsOp.setComposite(java.awt.AlphaComposite.SrcOver).run(GraphicsIOWrapper(graphics))
+    GraphicsOp
+      .setComposite(java.awt.AlphaComposite.SrcOver)
+      .run(GraphicsIOWrapper(graphics))
     verify(graphics).setComposite(java.awt.AlphaComposite.SrcOver)
   }
 
   test("setRenderingHint should call the proper method in Graphics api") {
     val graphics = mock[java.awt.Graphics2D]
-    GraphicsOp.setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON).run(GraphicsIOWrapper(graphics))
-    verify(graphics).setRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON)
+    GraphicsOp
+      .setRenderingHint(
+        java.awt.RenderingHints.KEY_ANTIALIASING,
+        java.awt.RenderingHints.VALUE_ANTIALIAS_ON
+      )
+      .run(GraphicsIOWrapper(graphics))
+    verify(graphics).setRenderingHint(
+      java.awt.RenderingHints.KEY_ANTIALIASING,
+      java.awt.RenderingHints.VALUE_ANTIALIAS_ON
+    )
   }
 
   test("getRenderingHint should call the proper method in Graphics api") {
     val graphics = mock[java.awt.Graphics2D]
-    GraphicsOp.getRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING).run(GraphicsIOWrapper(graphics))
+    GraphicsOp
+      .getRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING)
+      .run(GraphicsIOWrapper(graphics))
     verify(graphics).getRenderingHint(java.awt.RenderingHints.KEY_ANTIALIASING)
   }
 
   test("setRenderingHints should call the proper method in Graphics api") {
     val graphics = mock[java.awt.Graphics2D]
-    GraphicsOp.setRenderingHints(Map(java.awt.RenderingHints.KEY_ANTIALIASING -> java.awt.RenderingHints.VALUE_ANTIALIAS_ON)).run(GraphicsIOWrapper(graphics))
-    verify(graphics).setRenderingHints(Map(java.awt.RenderingHints.KEY_ANTIALIASING -> java.awt.RenderingHints.VALUE_ANTIALIAS_ON).asJava)
-    verify(graphics).setRenderingHints(new java.awt.RenderingHints(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON))
+    GraphicsOp
+      .setRenderingHints(
+        Map(
+          java.awt.RenderingHints.KEY_ANTIALIASING -> java.awt.RenderingHints.VALUE_ANTIALIAS_ON
+        )
+      )
+      .run(GraphicsIOWrapper(graphics))
+    verify(graphics).setRenderingHints(
+      Map(
+        java.awt.RenderingHints.KEY_ANTIALIASING -> java.awt.RenderingHints.VALUE_ANTIALIAS_ON
+      ).asJava
+    )
+    verify(graphics).setRenderingHints(
+      new java.awt.RenderingHints(
+        java.awt.RenderingHints.KEY_ANTIALIASING,
+        java.awt.RenderingHints.VALUE_ANTIALIAS_ON
+      )
+    )
   }
 
   test("addRenderingHints should call the proper method in Graphics api") {
     val graphics = mock[java.awt.Graphics2D]
-    GraphicsOp.addRenderingHints(Map(java.awt.RenderingHints.KEY_ANTIALIASING -> java.awt.RenderingHints.VALUE_ANTIALIAS_ON)).run(GraphicsIOWrapper(graphics))
-    verify(graphics).addRenderingHints(Map(java.awt.RenderingHints.KEY_ANTIALIASING -> java.awt.RenderingHints.VALUE_ANTIALIAS_ON).asJava)
-    verify(graphics).addRenderingHints(new java.awt.RenderingHints(java.awt.RenderingHints.KEY_ANTIALIASING, java.awt.RenderingHints.VALUE_ANTIALIAS_ON))
+    GraphicsOp
+      .addRenderingHints(
+        Map(
+          java.awt.RenderingHints.KEY_ANTIALIASING -> java.awt.RenderingHints.VALUE_ANTIALIAS_ON
+        )
+      )
+      .run(GraphicsIOWrapper(graphics))
+    verify(graphics).addRenderingHints(
+      Map(
+        java.awt.RenderingHints.KEY_ANTIALIASING -> java.awt.RenderingHints.VALUE_ANTIALIAS_ON
+      ).asJava
+    )
+    verify(graphics).addRenderingHints(
+      new java.awt.RenderingHints(
+        java.awt.RenderingHints.KEY_ANTIALIASING,
+        java.awt.RenderingHints.VALUE_ANTIALIAS_ON
+      )
+    )
   }
 
   test("getRenderingHints should call the proper method in Graphics api") {
@@ -209,13 +268,17 @@ class GraphicsOpSpec extends AnyFunSuite {
 
   test("draw should call the proper method in Graphics api") {
     val graphics = mock[java.awt.Graphics2D]
-    GraphicsOp.draw(new java.awt.geom.Rectangle2D.Double(0, 0, 10, 10)).run(GraphicsIOWrapper(graphics))
+    GraphicsOp
+      .draw(new java.awt.geom.Rectangle2D.Double(0, 0, 10, 10))
+      .run(GraphicsIOWrapper(graphics))
     verify(graphics).draw(new java.awt.geom.Rectangle2D.Double(0, 0, 10, 10))
   }
 
   test("fill should call the proper method in Graphics api") {
     val graphics = mock[java.awt.Graphics2D]
-    GraphicsOp.fill(new java.awt.geom.Rectangle2D.Double(0, 0, 10, 10)).run(GraphicsIOWrapper(graphics))
+    GraphicsOp
+      .fill(new java.awt.geom.Rectangle2D.Double(0, 0, 10, 10))
+      .run(GraphicsIOWrapper(graphics))
     verify(graphics).fill(new java.awt.geom.Rectangle2D.Double(0, 0, 10, 10))
   }
 
@@ -253,7 +316,9 @@ class GraphicsOpSpec extends AnyFunSuite {
     verify(graphics).getFontMetrics(font)
   }
 
-  test("getFontMetrics should call the proper method in Graphics api when font is null") {
+  test(
+    "getFontMetrics should call the proper method in Graphics api when font is null"
+  ) {
     val graphics = mock[java.awt.Graphics2D]
     GraphicsOp.getFontMetrics(null).run(GraphicsIOWrapper(graphics))
     verify(graphics).getFontMetrics(null)

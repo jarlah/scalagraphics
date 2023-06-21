@@ -160,13 +160,13 @@ class GraphicsIOWrapper(g: Graphics2D) extends GraphicsIO {
     g.setClip(clip)
 
   override def copyArea(
-                         x: Int,
-                         y: Int,
-                         width: Int,
-                         height: Int,
-                         dx: Int,
-                         dy: Int
-                       ): Unit =
+      x: Int,
+      y: Int,
+      width: Int,
+      height: Int,
+      dx: Int,
+      dy: Int
+  ): Unit =
     g.copyArea(x, y, width, height, dx, dy)
 
   override def drawLine(x1: Int, y1: Int, x2: Int, y2: Int): Unit =
@@ -176,149 +176,149 @@ class GraphicsIOWrapper(g: Graphics2D) extends GraphicsIO {
     g.fillRect(x, y, width, height)
 
   override def drawRoundRect(
-                              x: Int,
-                              y: Int,
-                              width: Int,
-                              height: Int,
-                              arcWidth: Int,
-                              arcHeight: Int
-                            ): Unit =
+      x: Int,
+      y: Int,
+      width: Int,
+      height: Int,
+      arcWidth: Int,
+      arcHeight: Int
+  ): Unit =
     g.drawRoundRect(x, y, width, height, arcWidth, arcHeight)
 
   override def fillRoundRect(
-                              x: Int,
-                              y: Int,
-                              width: Int,
-                              height: Int,
-                              arcWidth: Int,
-                              arcHeight: Int
-                            ): Unit =
+      x: Int,
+      y: Int,
+      width: Int,
+      height: Int,
+      arcWidth: Int,
+      arcHeight: Int
+  ): Unit =
     g.fillRoundRect(x, y, width, height, arcWidth, arcHeight)
 
   override def fillOval(x: Int, y: Int, width: Int, height: Int): Unit =
     g.fillOval(x, y, width, height)
 
   override def drawArc(
-                        x: Int,
-                        y: Int,
-                        width: Int,
-                        height: Int,
-                        startAngle: Int,
-                        arcAngle: Int
-                      ): Unit =
+      x: Int,
+      y: Int,
+      width: Int,
+      height: Int,
+      startAngle: Int,
+      arcAngle: Int
+  ): Unit =
     g.drawArc(x, y, width, height, startAngle, arcAngle)
 
   override def fillArc(
-                        x: Int,
-                        y: Int,
-                        width: Int,
-                        height: Int,
-                        startAngle: Int,
-                        arcAngle: Int
-                      ): Unit =
+      x: Int,
+      y: Int,
+      width: Int,
+      height: Int,
+      startAngle: Int,
+      arcAngle: Int
+  ): Unit =
     g.fillArc(x, y, width, height, startAngle, arcAngle)
 
   override def drawPolyline(
-                             xPoints: Array[Int],
-                             yPoints: Array[Int],
-                             nPoints: Int
-                           ): Unit =
+      xPoints: Array[Int],
+      yPoints: Array[Int],
+      nPoints: Int
+  ): Unit =
     g.drawPolyline(xPoints, yPoints, nPoints)
 
   override def drawPolygon(
-                            xPoints: Array[Int],
-                            yPoints: Array[Int],
-                            nPoints: Int
-                          ): Unit =
+      xPoints: Array[Int],
+      yPoints: Array[Int],
+      nPoints: Int
+  ): Unit =
     g.drawPolygon(xPoints, yPoints, nPoints)
 
   override def fillPolygon(
-                            xPoints: Array[Int],
-                            yPoints: Array[Int],
-                            nPoints: Int
-                          ): Unit =
+      xPoints: Array[Int],
+      yPoints: Array[Int],
+      nPoints: Int
+  ): Unit =
     g.fillPolygon(xPoints, yPoints, nPoints)
 
   override def drawString(
-                           iterator: AttributedCharacterIterator,
-                           x: Int,
-                           y: Int
-                         ): Unit =
+      iterator: AttributedCharacterIterator,
+      x: Int,
+      y: Int
+  ): Unit =
     g.drawString(iterator, x, y)
 
   override def drawImage(
-                          img: Image,
-                          x: Int,
-                          y: Int,
-                          observer: ImageObserver
-                        ): Boolean =
+      img: Image,
+      x: Int,
+      y: Int,
+      observer: ImageObserver
+  ): Boolean =
     g.drawImage(img, x, y, observer)
 
   override def drawImage(
-                          img: Image,
-                          x: Int,
-                          y: Int,
-                          width: Int,
-                          height: Int,
-                          observer: ImageObserver
-                        ): Boolean =
+      img: Image,
+      x: Int,
+      y: Int,
+      width: Int,
+      height: Int,
+      observer: ImageObserver
+  ): Boolean =
     g.drawImage(img, x, y, width, height, observer)
 
   override def drawImage(
-                          img: Image,
-                          x: Int,
-                          y: Int,
-                          bgcolor: Color,
-                          observer: ImageObserver
-                        ): Boolean =
+      img: Image,
+      x: Int,
+      y: Int,
+      bgcolor: Color,
+      observer: ImageObserver
+  ): Boolean =
     g.drawImage(img, x, y, bgcolor, observer)
 
   override def drawImage(
-                          img: Image,
-                          x: Int,
-                          y: Int,
-                          width: Int,
-                          height: Int,
-                          bgcolor: Color,
-                          observer: ImageObserver
-                        ): Boolean =
+      img: Image,
+      x: Int,
+      y: Int,
+      width: Int,
+      height: Int,
+      bgcolor: Color,
+      observer: ImageObserver
+  ): Boolean =
     g.drawImage(img, x, y, width, height, bgcolor, observer)
 
   override def drawImage(
-                          img: Image,
-                          dx1: Int,
-                          dy1: Int,
-                          dx2: Int,
-                          dy2: Int,
-                          sx1: Int,
-                          sy1: Int,
-                          sx2: Int,
-                          sy2: Int,
-                          observer: ImageObserver
-                        ): Boolean =
+      img: Image,
+      dx1: Int,
+      dy1: Int,
+      dx2: Int,
+      dy2: Int,
+      sx1: Int,
+      sy1: Int,
+      sx2: Int,
+      sy2: Int,
+      observer: ImageObserver
+  ): Boolean =
     g.drawImage(img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, observer)
 
   override def drawImage(
-                          img: Image,
-                          dx1: Int,
-                          dy1: Int,
-                          dx2: Int,
-                          dy2: Int,
-                          sx1: Int,
-                          sy1: Int,
-                          sx2: Int,
-                          sy2: Int,
-                          bgcolor: Color,
-                          observer: ImageObserver
-                        ): Boolean =
+      img: Image,
+      dx1: Int,
+      dy1: Int,
+      dx2: Int,
+      dy2: Int,
+      sx1: Int,
+      sy1: Int,
+      sx2: Int,
+      sy2: Int,
+      bgcolor: Color,
+      observer: ImageObserver
+  ): Boolean =
     g.drawImage(img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, bgcolor, observer)
 
   override def dispose(): Unit =
     g.dispose()
 
   override def addRenderingHints(
-                                  hints: Map[java.awt.RenderingHints.Key, _]
-                                ): Unit =
+      hints: Map[java.awt.RenderingHints.Key, _]
+  ): Unit =
     g.addRenderingHints(hints.asJava)
 
   override def clip(s: Shape): Unit =
@@ -331,30 +331,30 @@ class GraphicsIOWrapper(g: Graphics2D) extends GraphicsIO {
     g.drawGlyphVector(gv, x, y)
 
   override def drawImage(
-                          img: BufferedImage,
-                          op: BufferedImageOp,
-                          x: Int,
-                          y: Int
-                        ): Unit =
+      img: BufferedImage,
+      op: BufferedImageOp,
+      x: Int,
+      y: Int
+  ): Unit =
     g.drawImage(img, op, x, y)
 
   override def drawImage(
-                          img: Image,
-                          xform: AffineTransform,
-                          obs: ImageObserver
-                        ): Boolean =
+      img: Image,
+      xform: AffineTransform,
+      obs: ImageObserver
+  ): Boolean =
     g.drawImage(img, xform, obs)
 
   override def drawRenderableImage(
-                                    img: RenderableImage,
-                                    xform: AffineTransform
-                                  ): Unit =
+      img: RenderableImage,
+      xform: AffineTransform
+  ): Unit =
     g.drawRenderableImage(img, xform)
 
   override def drawRenderedImage(
-                                  img: RenderedImage,
-                                  xform: AffineTransform
-                                ): Unit =
+      img: RenderedImage,
+      xform: AffineTransform
+  ): Unit =
     g.drawRenderedImage(img, xform)
 
   override def fill(s: Shape): Unit =
@@ -406,9 +406,9 @@ class GraphicsIOWrapper(g: Graphics2D) extends GraphicsIO {
     g.setPaint(paint)
 
   override def setRenderingHint(
-                                 hintKey: RenderingHints.Key,
-                                 hintValue: Any
-                               ): Unit =
+      hintKey: RenderingHints.Key,
+      hintValue: Any
+  ): Unit =
     g.setRenderingHint(hintKey, hintValue)
 
   override def setRenderingHints(hints: Map[_, _]): Unit =
@@ -502,13 +502,13 @@ object GraphicsOp {
     liftIO(_.setClip(clip))
 
   def copyArea(
-                x: Int,
-                y: Int,
-                width: Int,
-                height: Int,
-                dx: Int,
-                dy: Int
-              ): GraphicsOp[Unit] =
+      x: Int,
+      y: Int,
+      width: Int,
+      height: Int,
+      dx: Int,
+      dy: Int
+  ): GraphicsOp[Unit] =
     liftIO(_.copyArea(x, y, width, height, dx, dy))
 
   def drawLine(x1: Int, y1: Int, x2: Int, y2: Int): GraphicsOp[Unit] =
@@ -518,25 +518,25 @@ object GraphicsOp {
     liftIO(_.fillRect(x, y, width, height))
 
   def drawRoundRect(
-                     x: Int,
-                     y: Int,
-                     width: Int,
-                     height: Int,
-                     arcWidth: Int,
-                     arcHeight: Int
-                   ): GraphicsOp[Unit] =
+      x: Int,
+      y: Int,
+      width: Int,
+      height: Int,
+      arcWidth: Int,
+      arcHeight: Int
+  ): GraphicsOp[Unit] =
     liftIO(
       _.drawRoundRect(x, y, width, height, arcWidth, arcHeight)
     )
 
   def fillRoundRect(
-                     x: Int,
-                     y: Int,
-                     width: Int,
-                     height: Int,
-                     arcWidth: Int,
-                     arcHeight: Int
-                   ): GraphicsOp[Unit] =
+      x: Int,
+      y: Int,
+      width: Int,
+      height: Int,
+      arcWidth: Int,
+      arcHeight: Int
+  ): GraphicsOp[Unit] =
     liftIO(
       _.fillRoundRect(x, y, width, height, arcWidth, arcHeight)
     )
@@ -545,122 +545,122 @@ object GraphicsOp {
     liftIO(_.fillOval(x, y, width, height))
 
   def drawArc(
-               x: Int,
-               y: Int,
-               width: Int,
-               height: Int,
-               startAngle: Int,
-               arcAngle: Int
-             ): GraphicsOp[Unit] =
+      x: Int,
+      y: Int,
+      width: Int,
+      height: Int,
+      startAngle: Int,
+      arcAngle: Int
+  ): GraphicsOp[Unit] =
     liftIO(_.drawArc(x, y, width, height, startAngle, arcAngle))
 
   def fillArc(
-               x: Int,
-               y: Int,
-               width: Int,
-               height: Int,
-               startAngle: Int,
-               arcAngle: Int
-             ): GraphicsOp[Unit] =
+      x: Int,
+      y: Int,
+      width: Int,
+      height: Int,
+      startAngle: Int,
+      arcAngle: Int
+  ): GraphicsOp[Unit] =
     liftIO(_.fillArc(x, y, width, height, startAngle, arcAngle))
 
   def drawPolyline(
-                    xPoints: Array[Int],
-                    yPoints: Array[Int],
-                    nPoints: Int
-                  ): GraphicsOp[Unit] =
+      xPoints: Array[Int],
+      yPoints: Array[Int],
+      nPoints: Int
+  ): GraphicsOp[Unit] =
     liftIO(_.drawPolyline(xPoints, yPoints, nPoints))
 
   def drawPolygon(
-                   xPoints: Array[Int],
-                   yPoints: Array[Int],
-                   nPoints: Int
-                 ): GraphicsOp[Unit] =
+      xPoints: Array[Int],
+      yPoints: Array[Int],
+      nPoints: Int
+  ): GraphicsOp[Unit] =
     liftIO(_.drawPolygon(xPoints, yPoints, nPoints))
 
   def fillPolygon(
-                   xPoints: Array[Int],
-                   yPoints: Array[Int],
-                   nPoints: Int
-                 ): GraphicsOp[Unit] =
+      xPoints: Array[Int],
+      yPoints: Array[Int],
+      nPoints: Int
+  ): GraphicsOp[Unit] =
     liftIO(_.fillPolygon(xPoints, yPoints, nPoints))
 
   def drawString(
-                  iterator: AttributedCharacterIterator,
-                  x: Int,
-                  y: Int
-                ): GraphicsOp[Unit] =
+      iterator: AttributedCharacterIterator,
+      x: Int,
+      y: Int
+  ): GraphicsOp[Unit] =
     liftIO(_.drawString(iterator, x, y))
 
   def drawImage(
-                 img: Image,
-                 x: Int,
-                 y: Int,
-                 observer: ImageObserver
-               ): GraphicsOp[Boolean] =
+      img: Image,
+      x: Int,
+      y: Int,
+      observer: ImageObserver
+  ): GraphicsOp[Boolean] =
     liftIO(_.drawImage(img, x, y, observer))
 
   def drawImage(
-                 img: Image,
-                 x: Int,
-                 y: Int,
-                 width: Int,
-                 height: Int,
-                 observer: ImageObserver
-               ): GraphicsOp[Boolean] =
+      img: Image,
+      x: Int,
+      y: Int,
+      width: Int,
+      height: Int,
+      observer: ImageObserver
+  ): GraphicsOp[Boolean] =
     liftIO(_.drawImage(img, x, y, width, height, observer))
 
   def drawImage(
-                 img: Image,
-                 x: Int,
-                 y: Int,
-                 bgcolor: Color,
-                 observer: ImageObserver
-               ): GraphicsOp[Boolean] =
+      img: Image,
+      x: Int,
+      y: Int,
+      bgcolor: Color,
+      observer: ImageObserver
+  ): GraphicsOp[Boolean] =
     liftIO(_.drawImage(img, x, y, bgcolor, observer))
 
   def drawImage(
-                 img: Image,
-                 x: Int,
-                 y: Int,
-                 width: Int,
-                 height: Int,
-                 bgcolor: Color,
-                 observer: ImageObserver
-               ): GraphicsOp[Boolean] =
+      img: Image,
+      x: Int,
+      y: Int,
+      width: Int,
+      height: Int,
+      bgcolor: Color,
+      observer: ImageObserver
+  ): GraphicsOp[Boolean] =
     liftIO(
       _.drawImage(img, x, y, width, height, bgcolor, observer)
     )
 
   def drawImage(
-                 img: Image,
-                 dx1: Int,
-                 dy1: Int,
-                 dx2: Int,
-                 dy2: Int,
-                 sx1: Int,
-                 sy1: Int,
-                 sx2: Int,
-                 sy2: Int,
-                 observer: ImageObserver
-               ): GraphicsOp[Boolean] =
+      img: Image,
+      dx1: Int,
+      dy1: Int,
+      dx2: Int,
+      dy2: Int,
+      sx1: Int,
+      sy1: Int,
+      sx2: Int,
+      sy2: Int,
+      observer: ImageObserver
+  ): GraphicsOp[Boolean] =
     liftIO(
       _.drawImage(img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, observer)
     )
 
   def drawImage(
-                 img: Image,
-                 dx1: Int,
-                 dy1: Int,
-                 dx2: Int,
-                 dy2: Int,
-                 sx1: Int,
-                 sy1: Int,
-                 sx2: Int,
-                 sy2: Int,
-                 bgcolor: Color,
-                 observer: ImageObserver
-               ): GraphicsOp[Boolean] =
+      img: Image,
+      dx1: Int,
+      dy1: Int,
+      dx2: Int,
+      dy2: Int,
+      sx1: Int,
+      sy1: Int,
+      sx2: Int,
+      sy2: Int,
+      bgcolor: Color,
+      observer: ImageObserver
+  ): GraphicsOp[Boolean] =
     liftIO(
       _.drawImage(
         img,
@@ -681,17 +681,17 @@ object GraphicsOp {
     liftIO(_.dispose())
 
   def drawImage(
-                 img: Image,
-                 xform: AffineTransform,
-                 obs: ImageObserver
-               ): GraphicsOp[Boolean] = liftIO(_.drawImage(img, xform, obs))
+      img: Image,
+      xform: AffineTransform,
+      obs: ImageObserver
+  ): GraphicsOp[Boolean] = liftIO(_.drawImage(img, xform, obs))
 
   def drawImage(
-                 img: BufferedImage,
-                 op: BufferedImageOp,
-                 x: Int,
-                 y: Int
-               ): GraphicsOp[Unit] = liftIO(_.drawImage(img, op, x, y))
+      img: BufferedImage,
+      op: BufferedImageOp,
+      x: Int,
+      y: Int
+  ): GraphicsOp[Unit] = liftIO(_.drawImage(img, op, x, y))
 
   def addRenderingHints(hints: Map[RenderingHints.Key, _]): GraphicsOp[Unit] =
     liftIO(
@@ -706,14 +706,14 @@ object GraphicsOp {
     liftIO(_.drawGlyphVector(g, x, y))
 
   def drawRenderableImage(
-                           img: RenderableImage,
-                           xform: AffineTransform
-                         ): GraphicsOp[Unit] = liftIO(_.drawRenderableImage(img, xform))
+      img: RenderableImage,
+      xform: AffineTransform
+  ): GraphicsOp[Unit] = liftIO(_.drawRenderableImage(img, xform))
 
   def drawRenderedImage(
-                         img: RenderedImage,
-                         xform: AffineTransform
-                       ): GraphicsOp[Unit] = liftIO(_.drawRenderedImage(img, xform))
+      img: RenderedImage,
+      xform: AffineTransform
+  ): GraphicsOp[Unit] = liftIO(_.drawRenderedImage(img, xform))
 
   def getBackground: GraphicsOp[Color] = liftIO(_.getBackground)
 
@@ -749,9 +749,9 @@ object GraphicsOp {
   def setPaint(paint: Paint): GraphicsOp[Unit] = liftIO(_.setPaint(paint))
 
   def setRenderingHint(
-                        hintKey: RenderingHints.Key,
-                        hintValue: Object
-                      ): GraphicsOp[Unit] =
+      hintKey: RenderingHints.Key,
+      hintValue: Object
+  ): GraphicsOp[Unit] =
     liftIO(_.setRenderingHint(hintKey, hintValue))
 
   def setRenderingHints(hints: Map[_, _]): GraphicsOp[Unit] = liftIO(
@@ -788,42 +788,42 @@ object GraphicsOp {
   )
 
   def draw3DRect(
-                  x: Int,
-                  y: Int,
-                  width: Int,
-                  height: Int,
-                  raise: Boolean
-                ): GraphicsOp[Unit] = liftIO(
+      x: Int,
+      y: Int,
+      width: Int,
+      height: Int,
+      raise: Boolean
+  ): GraphicsOp[Unit] = liftIO(
     _.draw3DRect(x, y, width, height, raise)
   )
 
   def fill3DRect(
-                  x: Int,
-                  y: Int,
-                  width: Int,
-                  height: Int,
-                  raise: Boolean
-                ): GraphicsOp[Unit] = liftIO(
+      x: Int,
+      y: Int,
+      width: Int,
+      height: Int,
+      raise: Boolean
+  ): GraphicsOp[Unit] = liftIO(
     _.fill3DRect(x, y, width, height, raise)
   )
 
   def drawChars(
-                 data: Array[Char],
-                 offset: Int,
-                 length: Int,
-                 x: Int,
-                 y: Int
-               ): GraphicsOp[Unit] = liftIO(
+      data: Array[Char],
+      offset: Int,
+      length: Int,
+      x: Int,
+      y: Int
+  ): GraphicsOp[Unit] = liftIO(
     _.drawChars(data, offset, length, x, y)
   )
 
   def drawBytes(
-                 data: Array[Byte],
-                 offset: Int,
-                 length: Int,
-                 x: Int,
-                 y: Int
-               ): GraphicsOp[Unit] = liftIO(
+      data: Array[Byte],
+      offset: Int,
+      length: Int,
+      x: Int,
+      y: Int
+  ): GraphicsOp[Unit] = liftIO(
     _.drawBytes(data, offset, length, x, y)
   )
 
