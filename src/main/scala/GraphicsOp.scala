@@ -69,7 +69,7 @@ object GraphicsOp {
   def drawRect(x: Int, y: Int, width: Int, height: Int): GraphicsOp[Unit] =
     liftIO(_.drawRect(x, y, width, height))
 
-  def setColor(color: Color): GraphicsOp[Unit] =
+  def setColor(color: GraphicsIO.Color): GraphicsOp[Unit] =
     liftIO(_.setColor(color))
 
   def translate(x: Double, y: Double): GraphicsOp[Unit] =

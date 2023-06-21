@@ -99,7 +99,7 @@ class VulkanGraphicsIO extends GraphicsIO {
 
   override def getColor: Color = ???
 
-  override def setColor(c: Color): Unit = ???
+  override def setColor(c: GraphicsIO.Color): Unit = ???
 
   override def setPaintMode(): Unit = ???
 

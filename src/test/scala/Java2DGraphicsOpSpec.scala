@@ -6,7 +6,7 @@ import org.mockito.ArgumentMatchers.{any, anyInt}
 import org.mockito.Mockito.{spy, times, verify, when}
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatestplus.mockito.MockitoSugar.mock
-
+import org.scalatest.Assertions._
 import scala.jdk.CollectionConverters.*
 import java.awt.{BasicStroke, Color, Font, Rectangle}
 
@@ -33,7 +33,12 @@ class Java2DGraphicsOpSpec extends AnyFunSuite {
 
   test("setColor should call the proper method in Graphics api") {
     val graphics = mock[java.awt.Graphics2D]
-    GraphicsOp.setColor(Color.BLACK).run(Java2DGraphicsIO(graphics))
+    assert(
+      GraphicsOp
+        .setColor(GraphicsIO.Black)
+        .run(Java2DGraphicsIO(graphics))
+        .isRight
+    )
     verify(graphics).setColor(java.awt.Color.BLACK)
   }
 

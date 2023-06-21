@@ -77,7 +77,7 @@ trait GraphicsIO {
 
   def translate(tx: Double, ty: Double): Unit
 
-  def setColor(arg0: Color): Unit
+  def setColor(arg0: GraphicsIO.Color): Unit
 
   def translate(arg0: Int, arg1: Int): Unit
 
@@ -272,45 +272,31 @@ trait GraphicsIO {
 }
 
 object GraphicsIO {
-  private def javaToScalaType(javaType: String): String = javaType match {
-    case "void"    => "Unit"
-    case "boolean" => "Boolean"
-    case "byte"    => "Byte"
-    case "char"    => "Char"
-    case "short"   => "Short"
-    case "int"     => "Int"
-    case "long"    => "Long"
-    case "float"   => "Float"
-    case "double"  => "Double"
-    // object arrays
-    case "Byte[]"   => "Array[Byte]"
-    case "Char[]"   => "Array[Char]"
-    case "Short[]"  => "Array[Short]"
-    case "Int[]"    => "Array[Int]"
-    case "Long[]"   => "Array[Long]"
-    case "Float[]"  => "Array[Float]"
-    case "Double[]" => "Array[Double]"
-    // primitive arrays
-    case "byte[]"   => "Array[Byte]"
-    case "char[]"   => "Array[Char]"
-    case "short[]"  => "Array[Short]"
-    case "int[]"    => "Array[Int]"
-    case "long[]"   => "Array[Long]"
-    case "float[]"  => "Array[Float]"
-    case "double[]" => "array[double]"
-    case other      => other
+  trait Color {
+    val r: Float
+    val g: Float
+    val b: Float
+    val a: Float
   }
 
-  @main
-  def main(): Unit = {
-    val methods = classOf[java.awt.Graphics].getMethods
+  case object Black extends Color {
+    val r = 0.0f
+    val g = 0.0f
+    val b = 0.0f
+    val a: Float = 1.0f
+  }
 
-    for (method <- methods) {
-      val parameters = method.getParameters
-        .map(p => s"${p.getName}: ${javaToScalaType(p.getType.getSimpleName)}")
-        .mkString(", ")
-      val returnType = javaToScalaType(method.getReturnType.getSimpleName)
-      println(s"def ${method.getName}($parameters): $returnType")
-    }
+  case object White extends Color {
+    val r = 1.0f
+    val g = 1.0f
+    val b = 1.0f
+    val a: Float = 1.0f
+  }
+
+  case object Green extends Color {
+    val r = 0.0f
+    val g = 1.0f
+    val b = 0.0f
+    val a: Float = 1.0f
   }
 }

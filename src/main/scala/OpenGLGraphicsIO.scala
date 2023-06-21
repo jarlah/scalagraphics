@@ -1,18 +1,105 @@
 package com.github.jarlah.scalagraphics
 
+import com.github.jarlah.scalagraphics.OpenGLGraphicsIO.OpenGLColor
+import org.joml.Matrix4f
+
 import java.awt.font.{FontRenderContext, GlyphVector}
 import java.awt.geom.AffineTransform
 import java.awt.image.renderable.RenderableImage
-import java.awt.image.{
-  BufferedImage,
-  BufferedImageOp,
-  ImageObserver,
-  RenderedImage
-}
+import java.awt.image.{BufferedImage, BufferedImageOp, ImageObserver, RenderedImage}
 import java.awt.*
 import java.text.AttributedCharacterIterator
+import org.lwjgl.opengl.GL20.*
+import org.lwjgl.opengl.GL30.*
+import org.lwjgl.system.MemoryStack.stackPush
+import org.lwjgl.system.MemoryUtil.NULL
+import org.lwjgl.BufferUtils
+import org.lwjgl.opengl.GL11.*
+import org.lwjgl.opengl.GL15.*
+import org.lwjgl.opengl.GL20.*
+import org.lwjgl.opengl.GL30.*
+
 
 class OpenGLGraphicsIO extends GraphicsIO {
+
+  private var shaderProgram: Int = _
+  private var colorUniform: Int = _
+  private var transformUniform: Int = _
+  private var vao: Int = _
+  private var vbo: Int = _
+  private var windowWidth: Int = _
+  private var windowHeight: Int = _
+
+  def setupShaderProgram(): Unit = {
+    val vertexShaderSource =
+      """
+        |#version 330 core
+        |
+        |layout (location = 0) in vec3 aPos;
+        |uniform mat4 transform;
+        |
+        |void main()
+        |{
+        |    gl_Position = transform * vec4(aPos, 1.0);
+        |}
+        |""".stripMargin
+    val fragmentShaderSource = "#version 330 core\n" +
+      "out vec4 FragColor;\n" +
+      "uniform vec4 color;\n" +
+      "void main()\n" +
+      "{\n" +
+      "   FragColor = color;\n" +
+      "}"
+
+    val vertexShader = glCreateShader(GL_VERTEX_SHADER)
+    glShaderSource(vertexShader, vertexShaderSource)
+    glCompileShader(vertexShader)
+
+    val fragmentShader = glCreateShader(GL_FRAGMENT_SHADER)
+    glShaderSource(fragmentShader, fragmentShaderSource)
+    glCompileShader(fragmentShader)
+
+    shaderProgram = glCreateProgram()
+    glAttachShader(shaderProgram, vertexShader)
+    glAttachShader(shaderProgram, fragmentShader)
+    glLinkProgram(shaderProgram)
+
+    glDeleteShader(vertexShader)
+    glDeleteShader(fragmentShader)
+
+    colorUniform = glGetUniformLocation(shaderProgram, "color")
+    transformUniform = glGetUniformLocation(shaderProgram, "transform")
+  }
+
+  def setupRectangle(): Unit = {
+    vao = glGenVertexArrays()
+    glBindVertexArray(vao)
+
+    vbo = glGenBuffers()
+    glBindBuffer(GL_ARRAY_BUFFER, vbo)
+
+    val vertices = BufferUtils.createFloatBuffer(12)
+    vertices.put(Array(
+      0.0f, 0.0f, 0.0f,
+      1.0f, 0.0f, 0.0f,
+      1.0f, 1.0f, 0.0f,
+      0.0f, 1.0f, 0.0f
+    ))
+    vertices.flip()
+
+    glBufferData(GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW)
+    glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0)
+    glEnableVertexAttribArray(0)
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0)
+    glBindVertexArray(0)
+  }
+
+  def setWindowSize(width: Int, height: Int): Unit = {
+    windowWidth = width
+    windowHeight = height
+  }
+
   override def drawImage(img: Image, x: Int, y: Int): Boolean = ???
 
   override def addRenderingHints(hints: Map[RenderingHints.Key, _]): Unit = ???
@@ -99,7 +186,10 @@ class OpenGLGraphicsIO extends GraphicsIO {
 
   override def getColor: Color = ???
 
-  override def setColor(c: Color): Unit = ???
+  override def setColor(c: GraphicsIO.Color): Unit = {
+      glUseProgram(shaderProgram)
+      glUniform4f(colorUniform, c.r, c.g, c.b, c.a)
+  }
 
   override def setPaintMode(): Unit = ???
 
@@ -271,7 +361,19 @@ class OpenGLGraphicsIO extends GraphicsIO {
 
   override def getClipBounds(arg0: Rectangle): Rectangle = ???
 
-  override def drawRect(arg0: Int, arg1: Int, arg2: Int, arg3: Int): Unit = ???
+  override def drawRect(x: Int, y: Int, width: Int, height: Int): Unit = {
+    val projection = new Matrix4f().ortho2D(0, windowWidth, windowHeight, 0)
+    val model = new Matrix4f().identity().translate(x, y, 0).scale(width, height, 1)
+    val transform = new Matrix4f(projection).mul(model)
+    val buffer = BufferUtils.createFloatBuffer(16)
+    transform.get(buffer)
+
+    glUseProgram(shaderProgram)
+    glUniformMatrix4fv(transformUniform, false, buffer)
+    glBindVertexArray(vao)
+    glDrawArrays(GL_QUADS, 0, 4)
+    glBindVertexArray(0)
+  }
 
   override def draw3DRect(
       arg0: Int,
@@ -309,4 +411,9 @@ class OpenGLGraphicsIO extends GraphicsIO {
 
   override def hitClip(arg0: Int, arg1: Int, arg2: Int, arg3: Int): Boolean =
     ???
+}
+
+object OpenGLGraphicsIO {
+  case class OpenGLColor(r: Float, g: Float, b: Float, a: Float)
+      extends GraphicsIO.Color
 }

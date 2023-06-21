@@ -32,8 +32,8 @@ class Java2DGraphicsIO(g: Graphics2D) extends GraphicsIO {
   override def drawRect(x: Int, y: Int, width: Int, height: Int): Unit =
     g.drawRect(x, y, width, height)
 
-  override def setColor(color: Color): Unit =
-    g.setColor(color)
+  override def setColor(color: GraphicsIO.Color): Unit =
+    g.setColor(new Color(color.r, color.g, color.b, color.a))
 
   override def translate(x: Int, y: Int): Unit =
     g.translate(x, y)
