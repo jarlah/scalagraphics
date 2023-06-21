@@ -347,10 +347,5 @@ class GraphicsOpSpec extends AnyFunSuite {
     (action1 >>= action2).run(GraphicsIOWrapper(graphics))
     verify(graphics, times(1)).getFont
     verify(graphics, times(1)).setFont(new java.awt.Font("Arial", 1, 12))
-
-(getFont >>= setFont).run(GraphicsIOWrapper(graphics))
-val font = new Font("Arial", 1, 12)
-((pure(font) >>= setFont) >> drawString("Hello", 100, 100))
-  .run(GraphicsIOWrapper(graphics))
   }
 }
