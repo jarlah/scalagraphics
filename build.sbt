@@ -1,4 +1,4 @@
-ThisBuild / version := "0.3.1-SNAPSHOT"
+ThisBuild / version := "0.3.2-SNAPSHOT"
 
 ThisBuild / scalaVersion := "3.3.0"
 
@@ -11,6 +11,7 @@ lazy val root = (project in file("."))
       "org.lwjgl" % "lwjgl" % "3.3.1" % "provided",
       "org.lwjgl" % "lwjgl-opengl" % "3.3.1" % "provided",
       "org.lwjgl" % "lwjgl-vulkan" % "3.3.1" % "provided",
+      "org.lwjgl" % "lwjgl-nanovg" % "3.3.1" % "provided",
       "org.joml" % "joml" % "1.10.5" % "provided"
     ),
     libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.16",

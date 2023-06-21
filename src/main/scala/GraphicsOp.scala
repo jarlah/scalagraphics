@@ -84,10 +84,10 @@ object GraphicsOp {
   def setXORMode(c1: Color): GraphicsOp[Unit] =
     liftIO(_.setXORMode(c1))
 
-  def getFont: GraphicsOp[Font] =
+  def getFont: GraphicsOp[GraphicsIO.Font] =
     liftIO(_.getFont)
 
-  def setFont(font: Font): GraphicsOp[Unit] =
+  def setFont(font: GraphicsIO.Font): GraphicsOp[Unit] =
     liftIO(_.setFont(font))
 
   def getFontMetrics(f: Font): GraphicsOp[FontMetrics] =

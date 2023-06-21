@@ -49,11 +49,14 @@ class Java2DGraphicsIO(g: Graphics2D) extends GraphicsIO {
   override def setXORMode(c1: Color): Unit =
     g.setXORMode(c1)
 
-  override def getFont: Font =
-    g.getFont
+  override def getFont: GraphicsIO.Font = {
+    Option(g.getFont).map(font =>
+      GraphicsIO.Font(font.getName, font.getStyle, font.getSize)
+    ).orNull
+  }
 
-  override def setFont(font: Font): Unit =
-    g.setFont(font)
+  override def setFont(font: GraphicsIO.Font): Unit =
+    g.setFont(new Font(font.name, font.style, font.size))
 
   override def getFontMetrics(f: Font): FontMetrics =
     g.getFontMetrics(f)

@@ -13,115 +13,115 @@ import java.awt.*
 import java.text.AttributedCharacterIterator
 
 trait GraphicsIO {
-  def drawImage(img: Image, x: Int, y: Int): Boolean
+  def drawImage(img: Image, x: Int, y: Int): Boolean = throw new IllegalStateException("drawImage is not implemented")
 
-  def addRenderingHints(hints: Map[RenderingHints.Key, _]): Unit
+  def addRenderingHints(hints: Map[RenderingHints.Key, _]): Unit = throw new IllegalStateException("drawImage is not implemented")
 
-  def clip(s: Shape): Unit
+  def clip(s: Shape): Unit = throw new IllegalStateException("clip is not implemented")
 
-  def draw(s: Shape): Unit
+  def draw(s: Shape): Unit = throw new IllegalStateException("draw is not implemented")
 
-  def drawGlyphVector(g: GlyphVector, x: Float, y: Float): Unit
+  def drawGlyphVector(g: GlyphVector, x: Float, y: Float): Unit = throw new IllegalStateException("drawGlyphVector is not implemented")
 
-  def drawImage(img: BufferedImage, op: BufferedImageOp, x: Int, y: Int): Unit
+  def drawImage(img: BufferedImage, op: BufferedImageOp, x: Int, y: Int): Unit = throw new IllegalStateException("drawImage is not implemented")
 
-  def drawImage(img: Image, xform: AffineTransform, obs: ImageObserver): Boolean
+  def drawImage(img: Image, xform: AffineTransform, obs: ImageObserver): Boolean = throw new IllegalStateException("drawImage is not implemented")
 
-  def drawRenderableImage(img: RenderableImage, xform: AffineTransform): Unit
+  def drawRenderableImage(img: RenderableImage, xform: AffineTransform): Unit = throw new IllegalStateException("drawRenderableImage is not implemented")
 
-  def drawRenderedImage(img: RenderedImage, xform: AffineTransform): Unit
+  def drawRenderedImage(img: RenderedImage, xform: AffineTransform): Unit = throw new IllegalStateException("drawRenderedImage is not implemented")
 
-  def fill(s: Shape): Unit
+  def fill(s: Shape): Unit = throw new IllegalStateException("fill is not implemented")
 
-  def getBackground: Color
+  def getBackground: Color  = throw new IllegalStateException("getBackground is not implemented")
 
-  def getComposite: Composite
+  def getComposite: Composite  = throw new IllegalStateException("getComposite is not implemented")
 
-  def getFontRenderContext: FontRenderContext
+  def getFontRenderContext: FontRenderContext  = throw new IllegalStateException("getFontRenderContext is not implemented")
 
-  def getPaint: Paint
+  def getPaint: Paint  = throw new IllegalStateException("getPaint is not implemented")
 
-  def getRenderingHint(hintKey: RenderingHints.Key): AnyRef
+  def getRenderingHint(hintKey: RenderingHints.Key): AnyRef  = throw new IllegalStateException("getRenderingHint is not implemented")
 
-  def getRenderingHints: RenderingHints
+  def getRenderingHints: RenderingHints  = throw new IllegalStateException("getRenderingHints is not implemented")
 
-  def getStroke: Stroke
+  def getStroke: Stroke  = throw new IllegalStateException("getStroke is not implemented")
 
-  def getTransform: AffineTransform
+  def getTransform: AffineTransform  = throw new IllegalStateException("getTransform is not implemented")
 
-  def hit(rect: Rectangle, s: Shape, onStroke: Boolean): Boolean
+  def hit(rect: Rectangle, s: Shape, onStroke: Boolean): Boolean = throw new IllegalStateException("hit is not implemented")
 
-  def rotate(theta: Double): Unit
+  def rotate(theta: Double): Unit = throw new IllegalStateException("rotate is not implemented")
 
-  def rotate(theta: Double, x: Double, y: Double): Unit
+  def rotate(theta: Double, x: Double, y: Double): Unit = throw new IllegalStateException("rotate is not implemented")
 
-  def scale(sx: Double, sy: Double): Unit
+  def scale(sx: Double, sy: Double): Unit = throw new IllegalStateException("scale is not implemented")
 
-  def setBackground(color: Color): Unit
+  def setBackground(color: Color): Unit = throw new IllegalStateException("setBackground is not implemented")
 
-  def setComposite(comp: AlphaComposite): Unit
+  def setComposite(comp: AlphaComposite): Unit = throw new IllegalStateException("setComposite is not implemented")
 
-  def setPaint(paint: Paint): Unit
+  def setPaint(paint: Paint): Unit = throw new IllegalStateException("setPaint is not implemented")
 
-  def setRenderingHint(hintKey: RenderingHints.Key, hintValue: Any): Unit
+  def setRenderingHint(hintKey: RenderingHints.Key, hintValue: Any): Unit = throw new IllegalStateException("setRenderingHint is not implemented")
 
-  def setRenderingHints(hints: Map[_, _]): Unit
+  def setRenderingHints(hints: Map[_, _]): Unit = throw new IllegalStateException("setRenderingHints is not implemented")
 
-  def setStroke(s: Stroke): Unit
+  def setStroke(s: Stroke): Unit = throw new IllegalStateException("setStroke is not implemented")
 
-  def setTransform(Tx: AffineTransform): Unit
+  def setTransform(Tx: AffineTransform): Unit = throw new IllegalStateException("setTransform is not implemented")
 
-  def shear(shx: Double, shy: Double): Unit
+  def shear(shx: Double, shy: Double): Unit = throw new IllegalStateException("shear is not implemented")
 
-  def transform(Tx: AffineTransform): Unit
+  def transform(Tx: AffineTransform): Unit = throw new IllegalStateException("transform is not implemented")
 
-  def translate(tx: Double, ty: Double): Unit
+  def translate(tx: Double, ty: Double): Unit = throw new IllegalStateException("translate is not implemented")
 
-  def setColor(arg0: GraphicsIO.Color): Unit
+  def setColor(arg0: GraphicsIO.Color): Unit = throw new IllegalStateException("setColor is not implemented")
 
-  def translate(arg0: Int, arg1: Int): Unit
+  def translate(arg0: Int, arg1: Int): Unit = throw new IllegalStateException("translate is not implemented")
 
-  def clipRect(arg0: Int, arg1: Int, arg2: Int, arg3: Int): Unit
+  def clipRect(arg0: Int, arg1: Int, arg2: Int, arg3: Int): Unit = throw new IllegalStateException("clipRect is not implemented")
 
-  def getFont: Font
+  def getFont: GraphicsIO.Font  = throw new IllegalStateException("getFont is not implemented")
 
-  def getFontMetrics(arg0: Font): FontMetrics
+  def getFontMetrics(arg0: Font): FontMetrics  = throw new IllegalStateException("getFontMetrics is not implemented")
 
-  def getFontMetrics: FontMetrics
+  def getFontMetrics: FontMetrics  = throw new IllegalStateException("getFontMetrics is not implemented")
 
-  def drawLine(arg0: Int, arg1: Int, arg2: Int, arg3: Int): Unit
+  def drawLine(arg0: Int, arg1: Int, arg2: Int, arg3: Int): Unit = throw new IllegalStateException("drawLine is not implemented")
 
-  def getColor: GraphicsIO.Color
+  def getColor: GraphicsIO.Color  = throw new IllegalStateException("getColor is not implemented")
 
-  def fillRect(arg0: Int, arg1: Int, arg2: Int, arg3: Int): Unit
+  def fillRect(arg0: Int, arg1: Int, arg2: Int, arg3: Int): Unit = throw new IllegalStateException("fillRect is not implemented")
 
-  def drawPolygon(arg0: Array[Int], arg1: Array[Int], arg2: Int): Unit
+  def drawPolygon(arg0: Array[Int], arg1: Array[Int], arg2: Int): Unit = throw new IllegalStateException("drawPolygon is not implemented")
 
-  def drawPolygon(arg0: Polygon): Unit
+  def drawPolygon(arg0: Polygon): Unit = throw new IllegalStateException("drawPolygon is not implemented")
 
-  def fillPolygon(arg0: Array[Int], arg1: Array[Int], arg2: Int): Unit
+  def fillPolygon(arg0: Array[Int], arg1: Array[Int], arg2: Int): Unit = throw new IllegalStateException("fillPolygon is not implemented")
 
-  def fillPolygon(arg0: Polygon): Unit
+  def fillPolygon(arg0: Polygon): Unit = throw new IllegalStateException("fillPolygon is not implemented")
 
-  def drawString(arg0: AttributedCharacterIterator, arg1: Int, arg2: Int): Unit
+  def drawString(arg0: AttributedCharacterIterator, arg1: Int, arg2: Int): Unit = throw new IllegalStateException("drawString is not implemented")
 
-  def drawString(arg0: String, arg1: Int, arg2: Int): Unit
+  def drawString(arg0: String, arg1: Int, arg2: Int): Unit = throw new IllegalStateException("drawString is not implemented")
 
-  def getClipBounds(arg0: Rectangle): Rectangle
+  def getClipBounds(arg0: Rectangle): Rectangle  = throw new IllegalStateException("getClipBounds is not implemented")
 
-  def getClipBounds: Rectangle
+  def getClipBounds: Rectangle  = throw new IllegalStateException("getClipBounds is not implemented")
 
-  def setPaintMode(): Unit
+  def setPaintMode(): Unit = throw new IllegalStateException("setPaintMode is not implemented")
 
-  def setXORMode(arg0: Color): Unit
+  def setXORMode(arg0: Color): Unit = throw new IllegalStateException("setXORMode is not implemented")
 
-  def setFont(arg0: Font): Unit
+  def setFont(arg0: GraphicsIO.Font): Unit = throw new IllegalStateException("setFont is not implemented")
 
-  def setClip(arg0: Int, arg1: Int, arg2: Int, arg3: Int): Unit
+  def setClip(arg0: Int, arg1: Int, arg2: Int, arg3: Int): Unit = throw new IllegalStateException("setClip is not implemented")
 
-  def setClip(arg0: Shape): Unit
+  def setClip(arg0: Shape): Unit = throw new IllegalStateException("setClip is not implemented")
 
-  def getClip: Shape
+  def getClip: Shape  = throw new IllegalStateException("getClip is not implemented")
 
   def copyArea(
       arg0: Int,
@@ -130,11 +130,11 @@ trait GraphicsIO {
       arg3: Int,
       arg4: Int,
       arg5: Int
-  ): Unit
+  ): Unit = throw new IllegalStateException("copyArea is not implemented")
 
-  def drawRect(arg0: Int, arg1: Int, arg2: Int, arg3: Int): Unit
+  def drawRect(arg0: Int, arg1: Int, arg2: Int, arg3: Int): Unit = throw new IllegalStateException("drawRect is not implemented")
 
-  def clearRect(arg0: Int, arg1: Int, arg2: Int, arg3: Int): Unit
+  def clearRect(arg0: Int, arg1: Int, arg2: Int, arg3: Int): Unit = throw new IllegalStateException("clearRect is not implemented")
 
   def drawRoundRect(
       arg0: Int,
@@ -143,7 +143,7 @@ trait GraphicsIO {
       arg3: Int,
       arg4: Int,
       arg5: Int
-  ): Unit
+  ): Unit = throw new IllegalStateException("drawRoundRect is not implemented")
 
   def fillRoundRect(
       arg0: Int,
@@ -152,7 +152,7 @@ trait GraphicsIO {
       arg3: Int,
       arg4: Int,
       arg5: Int
-  ): Unit
+  ): Unit = throw new IllegalStateException("fillRoundRect is not implemented")
 
   def draw3DRect(
       arg0: Int,
@@ -160,7 +160,7 @@ trait GraphicsIO {
       arg2: Int,
       arg3: Int,
       arg4: Boolean
-  ): Unit
+  ): Unit = throw new IllegalStateException("draw3DRect is not implemented")
 
   def fill3DRect(
       arg0: Int,
@@ -168,11 +168,11 @@ trait GraphicsIO {
       arg2: Int,
       arg3: Int,
       arg4: Boolean
-  ): Unit
+  ): Unit = throw new IllegalStateException("fill3DRect is not implemented")
 
-  def drawOval(arg0: Int, arg1: Int, arg2: Int, arg3: Int): Unit
+  def drawOval(arg0: Int, arg1: Int, arg2: Int, arg3: Int): Unit = throw new IllegalStateException("drawOval is not implemented")
 
-  def fillOval(arg0: Int, arg1: Int, arg2: Int, arg3: Int): Unit
+  def fillOval(arg0: Int, arg1: Int, arg2: Int, arg3: Int): Unit = throw new IllegalStateException("fillOval is not implemented")
 
   def drawArc(
       arg0: Int,
@@ -181,7 +181,7 @@ trait GraphicsIO {
       arg3: Int,
       arg4: Int,
       arg5: Int
-  ): Unit
+  ): Unit = throw new IllegalStateException("drawArc is not implemented")
 
   def fillArc(
       arg0: Int,
@@ -190,9 +190,9 @@ trait GraphicsIO {
       arg3: Int,
       arg4: Int,
       arg5: Int
-  ): Unit
+  ): Unit = throw new IllegalStateException("fillArc is not implemented")
 
-  def drawPolyline(arg0: Array[Int], arg1: Array[Int], arg2: Int): Unit
+  def drawPolyline(arg0: Array[Int], arg1: Array[Int], arg2: Int): Unit = throw new IllegalStateException("drawPolyline is not implemented")
 
   def drawChars(
       arg0: Array[Char],
@@ -200,7 +200,7 @@ trait GraphicsIO {
       arg2: Int,
       arg3: Int,
       arg4: Int
-  ): Unit
+  ): Unit = throw new IllegalStateException("drawChars is not implemented")
 
   def drawBytes(
       arg0: Array[Byte],
@@ -208,7 +208,7 @@ trait GraphicsIO {
       arg2: Int,
       arg3: Int,
       arg4: Int
-  ): Unit
+  ): Unit = throw new IllegalStateException("drawBytes is not implemented")
 
   def drawImage(
       arg0: Image,
@@ -218,7 +218,7 @@ trait GraphicsIO {
       arg4: Int,
       arg5: Color,
       arg6: ImageObserver
-  ): Boolean
+  ): Boolean = throw new IllegalStateException("drawImage is not implemented")
 
   def drawImage(
       arg0: Image,
@@ -226,9 +226,9 @@ trait GraphicsIO {
       arg2: Int,
       arg3: Color,
       arg4: ImageObserver
-  ): Boolean
+  ): Boolean = throw new IllegalStateException("drawImage is not implemented")
 
-  def drawImage(arg0: Image, arg1: Int, arg2: Int, arg3: ImageObserver): Boolean
+  def drawImage(arg0: Image, arg1: Int, arg2: Int, arg3: ImageObserver): Boolean = throw new IllegalStateException("drawImage is not implemented")
 
   def drawImage(
       arg0: Image,
@@ -237,7 +237,7 @@ trait GraphicsIO {
       arg3: Int,
       arg4: Int,
       arg5: ImageObserver
-  ): Boolean
+  ): Boolean = throw new IllegalStateException("drawImage is not implemented")
 
   def drawImage(
       arg0: Image,
@@ -250,7 +250,7 @@ trait GraphicsIO {
       arg7: Int,
       arg8: Int,
       arg9: ImageObserver
-  ): Boolean
+  ): Boolean = throw new IllegalStateException("drawImage is not implemented")
 
   def drawImage(
       arg0: Image,
@@ -264,14 +264,33 @@ trait GraphicsIO {
       arg8: Int,
       arg9: Color,
       arg10: ImageObserver
-  ): Boolean
+  ): Boolean = throw new IllegalStateException("drawImage is not implemented")
 
-  def getClipRect: Rectangle
+  def getClipRect: Rectangle  = throw new IllegalStateException("getClipRect is not implemented")
 
-  def hitClip(arg0: Int, arg1: Int, arg2: Int, arg3: Int): Boolean
+  def hitClip(arg0: Int, arg1: Int, arg2: Int, arg3: Int): Boolean = throw new IllegalStateException("hitClip is not implemented")
 }
 
 object GraphicsIO {
+
+  trait Font {
+    val name: String
+    val style: Int
+    val size: Int
+
+    override def toString: String = {
+      name + "-" + style + "-" + size
+    }
+  }
+
+  object Font {
+    def apply(nameStr: String, sizeInt: Int, styleInt: Int): Font = new Font {
+      val name: String = nameStr
+      val size: Int = sizeInt
+      val style: Int = styleInt
+    }
+  }
+
   trait Color {
     val r: Float
     val g: Float
