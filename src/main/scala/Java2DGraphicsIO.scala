@@ -35,9 +35,6 @@ class Java2DGraphicsIO(g: Graphics2D) extends GraphicsIO {
   override def setColor(color: Color): Unit =
     g.setColor(color)
 
-  override def create(): Graphics =
-    g.create()
-
   override def translate(x: Int, y: Int): Unit =
     g.translate(x, y)
 
@@ -343,4 +340,53 @@ class Java2DGraphicsIO(g: Graphics2D) extends GraphicsIO {
 
   override def translate(tx: Double, ty: Double): Unit =
     g.translate(tx, ty)
+
+  override def getFontMetrics: FontMetrics =
+    g.getFontMetrics
+
+  override def drawPolygon(arg0: Polygon): Unit =
+    g.drawPolygon(arg0)
+
+  override def fillPolygon(arg0: Polygon): Unit =
+    g.fillPolygon(arg0)
+
+  override def getClipBounds(arg0: Rectangle): Rectangle =
+    g.getClipBounds(arg0)
+
+  override def draw3DRect(
+      arg0: Int,
+      arg1: Int,
+      arg2: Int,
+      arg3: Int,
+      arg4: Boolean
+  ): Unit = g.draw3DRect(arg0, arg1, arg2, arg3, arg4)
+
+  override def fill3DRect(
+      arg0: Int,
+      arg1: Int,
+      arg2: Int,
+      arg3: Int,
+      arg4: Boolean
+  ): Unit = g.fill3DRect(arg0, arg1, arg2, arg3, arg4)
+
+  override def drawChars(
+      arg0: Array[Char],
+      arg1: Int,
+      arg2: Int,
+      arg3: Int,
+      arg4: Int
+  ): Unit = g.drawChars(arg0, arg1, arg2, arg3, arg4)
+
+  override def drawBytes(
+      arg0: Array[Byte],
+      arg1: Int,
+      arg2: Int,
+      arg3: Int,
+      arg4: Int
+  ): Unit = g.drawBytes(arg0, arg1, arg2, arg3, arg4)
+
+  override def getClipRect: Rectangle = g.getClipRect
+
+  override def hitClip(arg0: Int, arg1: Int, arg2: Int, arg3: Int): Boolean =
+    g.hitClip(arg0, arg1, arg2, arg3)
 }

@@ -72,9 +72,6 @@ object GraphicsOp {
   def setColor(color: Color): GraphicsOp[Unit] =
     liftIO(_.setColor(color))
 
-  def create(): GraphicsOp[Graphics] =
-    liftIO(_.create())
-
   def translate(x: Double, y: Double): GraphicsOp[Unit] =
     liftIO(_.translate(x, y))
 

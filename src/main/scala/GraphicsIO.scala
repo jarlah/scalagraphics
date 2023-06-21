@@ -10,8 +10,9 @@ import java.awt.image.{
   RenderedImage
 }
 import java.awt.*
+import java.text.AttributedCharacterIterator
 
-trait GraphicsIO extends Graphics {
+trait GraphicsIO {
   def drawImage(img: Image, x: Int, y: Int): Boolean
 
   def addRenderingHints(hints: Map[RenderingHints.Key, _]): Unit
@@ -75,4 +76,243 @@ trait GraphicsIO extends Graphics {
   def transform(Tx: AffineTransform): Unit
 
   def translate(tx: Double, ty: Double): Unit
+
+  def setColor(arg0: Color): Unit
+
+  def dispose(): Unit
+
+  def translate(arg0: Int, arg1: Int): Unit
+
+  def clipRect(arg0: Int, arg1: Int, arg2: Int, arg3: Int): Unit
+
+  def getFont: Font
+
+  def getFontMetrics(arg0: Font): FontMetrics
+
+  def getFontMetrics: FontMetrics
+
+  def drawLine(arg0: Int, arg1: Int, arg2: Int, arg3: Int): Unit
+
+  def getColor: Color
+
+  def fillRect(arg0: Int, arg1: Int, arg2: Int, arg3: Int): Unit
+
+  def drawPolygon(arg0: Array[Int], arg1: Array[Int], arg2: Int): Unit
+
+  def drawPolygon(arg0: Polygon): Unit
+
+  def fillPolygon(arg0: Array[Int], arg1: Array[Int], arg2: Int): Unit
+
+  def fillPolygon(arg0: Polygon): Unit
+
+  def drawString(arg0: AttributedCharacterIterator, arg1: Int, arg2: Int): Unit
+
+  def drawString(arg0: String, arg1: Int, arg2: Int): Unit
+
+  def getClipBounds(arg0: Rectangle): Rectangle
+
+  def getClipBounds: Rectangle
+
+  def setPaintMode(): Unit
+
+  def setXORMode(arg0: Color): Unit
+
+  def setFont(arg0: Font): Unit
+
+  def setClip(arg0: Int, arg1: Int, arg2: Int, arg3: Int): Unit
+
+  def setClip(arg0: Shape): Unit
+
+  def getClip: Shape
+
+  def copyArea(
+      arg0: Int,
+      arg1: Int,
+      arg2: Int,
+      arg3: Int,
+      arg4: Int,
+      arg5: Int
+  ): Unit
+
+  def drawRect(arg0: Int, arg1: Int, arg2: Int, arg3: Int): Unit
+
+  def clearRect(arg0: Int, arg1: Int, arg2: Int, arg3: Int): Unit
+
+  def drawRoundRect(
+      arg0: Int,
+      arg1: Int,
+      arg2: Int,
+      arg3: Int,
+      arg4: Int,
+      arg5: Int
+  ): Unit
+
+  def fillRoundRect(
+      arg0: Int,
+      arg1: Int,
+      arg2: Int,
+      arg3: Int,
+      arg4: Int,
+      arg5: Int
+  ): Unit
+
+  def draw3DRect(
+      arg0: Int,
+      arg1: Int,
+      arg2: Int,
+      arg3: Int,
+      arg4: Boolean
+  ): Unit
+
+  def fill3DRect(
+      arg0: Int,
+      arg1: Int,
+      arg2: Int,
+      arg3: Int,
+      arg4: Boolean
+  ): Unit
+
+  def drawOval(arg0: Int, arg1: Int, arg2: Int, arg3: Int): Unit
+
+  def fillOval(arg0: Int, arg1: Int, arg2: Int, arg3: Int): Unit
+
+  def drawArc(
+      arg0: Int,
+      arg1: Int,
+      arg2: Int,
+      arg3: Int,
+      arg4: Int,
+      arg5: Int
+  ): Unit
+
+  def fillArc(
+      arg0: Int,
+      arg1: Int,
+      arg2: Int,
+      arg3: Int,
+      arg4: Int,
+      arg5: Int
+  ): Unit
+
+  def drawPolyline(arg0: Array[Int], arg1: Array[Int], arg2: Int): Unit
+
+  def drawChars(
+      arg0: Array[Char],
+      arg1: Int,
+      arg2: Int,
+      arg3: Int,
+      arg4: Int
+  ): Unit
+
+  def drawBytes(
+      arg0: Array[Byte],
+      arg1: Int,
+      arg2: Int,
+      arg3: Int,
+      arg4: Int
+  ): Unit
+
+  def drawImage(
+      arg0: Image,
+      arg1: Int,
+      arg2: Int,
+      arg3: Int,
+      arg4: Int,
+      arg5: Color,
+      arg6: ImageObserver
+  ): Boolean
+
+  def drawImage(
+      arg0: Image,
+      arg1: Int,
+      arg2: Int,
+      arg3: Color,
+      arg4: ImageObserver
+  ): Boolean
+
+  def drawImage(arg0: Image, arg1: Int, arg2: Int, arg3: ImageObserver): Boolean
+
+  def drawImage(
+      arg0: Image,
+      arg1: Int,
+      arg2: Int,
+      arg3: Int,
+      arg4: Int,
+      arg5: ImageObserver
+  ): Boolean
+
+  def drawImage(
+      arg0: Image,
+      arg1: Int,
+      arg2: Int,
+      arg3: Int,
+      arg4: Int,
+      arg5: Int,
+      arg6: Int,
+      arg7: Int,
+      arg8: Int,
+      arg9: ImageObserver
+  ): Boolean
+
+  def drawImage(
+      arg0: Image,
+      arg1: Int,
+      arg2: Int,
+      arg3: Int,
+      arg4: Int,
+      arg5: Int,
+      arg6: Int,
+      arg7: Int,
+      arg8: Int,
+      arg9: Color,
+      arg10: ImageObserver
+  ): Boolean
+
+  def getClipRect: Rectangle
+
+  def hitClip(arg0: Int, arg1: Int, arg2: Int, arg3: Int): Boolean
+}
+
+object GraphicsIO {
+  private def javaToScalaType(javaType: String): String = javaType match {
+    case "void"    => "Unit"
+    case "boolean" => "Boolean"
+    case "byte"    => "Byte"
+    case "char"    => "Char"
+    case "short"   => "Short"
+    case "int"     => "Int"
+    case "long"    => "Long"
+    case "float"   => "Float"
+    case "double"  => "Double"
+    // object arrays
+    case "Byte[]"   => "Array[Byte]"
+    case "Char[]"   => "Array[Char]"
+    case "Short[]"  => "Array[Short]"
+    case "Int[]"    => "Array[Int]"
+    case "Long[]"   => "Array[Long]"
+    case "Float[]"  => "Array[Float]"
+    case "Double[]" => "Array[Double]"
+    // primitive arrays
+    case "byte[]"   => "Array[Byte]"
+    case "char[]"   => "Array[Char]"
+    case "short[]"  => "Array[Short]"
+    case "int[]"    => "Array[Int]"
+    case "long[]"   => "Array[Long]"
+    case "float[]"  => "Array[Float]"
+    case "double[]" => "array[double]"
+    case other      => other
+  }
+
+  @main
+  def main(): Unit = {
+    val methods = classOf[java.awt.Graphics].getMethods
+
+    for (method <- methods) {
+      val parameters = method.getParameters
+        .map(p => s"${p.getName}: ${javaToScalaType(p.getType.getSimpleName)}")
+        .mkString(", ")
+      val returnType = javaToScalaType(method.getReturnType.getSimpleName)
+      println(s"def ${method.getName}($parameters): $returnType")
+    }
+  }
 }

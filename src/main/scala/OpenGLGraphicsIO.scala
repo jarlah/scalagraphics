@@ -95,8 +95,6 @@ class OpenGLGraphicsIO extends GraphicsIO {
 
   override def translate(tx: Double, ty: Double): Unit = ???
 
-  override def create(): Graphics = ???
-
   override def translate(x: Int, y: Int): Unit = ???
 
   override def getColor: Color = ???
@@ -266,4 +264,51 @@ class OpenGLGraphicsIO extends GraphicsIO {
   ): Boolean = ???
 
   override def dispose(): Unit = ???
+
+  override def getFontMetrics: FontMetrics = ???
+
+  override def drawPolygon(arg0: Polygon): Unit = ???
+
+  override def fillPolygon(arg0: Polygon): Unit = ???
+
+  override def getClipBounds(arg0: Rectangle): Rectangle = ???
+
+  override def drawRect(arg0: Int, arg1: Int, arg2: Int, arg3: Int): Unit = ???
+
+  override def draw3DRect(
+      arg0: Int,
+      arg1: Int,
+      arg2: Int,
+      arg3: Int,
+      arg4: Boolean
+  ): Unit = ???
+
+  override def fill3DRect(
+      arg0: Int,
+      arg1: Int,
+      arg2: Int,
+      arg3: Int,
+      arg4: Boolean
+  ): Unit = ???
+
+  override def drawChars(
+      arg0: Array[Char],
+      arg1: Int,
+      arg2: Int,
+      arg3: Int,
+      arg4: Int
+  ): Unit = ???
+
+  override def drawBytes(
+      arg0: Array[Byte],
+      arg1: Int,
+      arg2: Int,
+      arg3: Int,
+      arg4: Int
+  ): Unit = ???
+
+  override def getClipRect: Rectangle = ???
+
+  override def hitClip(arg0: Int, arg1: Int, arg2: Int, arg3: Int): Boolean =
+    ???
 }
