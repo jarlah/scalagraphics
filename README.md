@@ -20,4 +20,13 @@ val g: Graphics = // somehow get graphics object
 renderHello.run(GraphicsIOWrapper(g))
 ```
 
+or even
+
+```scala
+(getFont >>= setFont).run(GraphicsIOWrapper(graphics))
+val font = new Font("Arial", 1, 12)
+((pure(font) >>= setFont) >> drawString("Hello", 100, 100))
+  .run(GraphicsIOWrapper(graphics))
+```
+
 To see how it can be used in an actual Java 2D game, see https://github.com/jarlah/scalagraphics-demo

@@ -1,12 +1,18 @@
 package com.github.jarlah.scalagraphics
 
+import com.github.jarlah.scalagraphics.GraphicsOp.{
+  drawString,
+  getFont,
+  pure,
+  setFont
+}
 import org.mockito.ArgumentMatchers.{any, anyInt}
 import org.mockito.Mockito.{spy, times, verify, when}
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatestplus.mockito.MockitoSugar.mock
 
 import scala.jdk.CollectionConverters.*
-import java.awt.{BasicStroke, Color, Rectangle}
+import java.awt.{BasicStroke, Color, Font, Rectangle}
 
 class GraphicsOpSpec extends AnyFunSuite {
 
@@ -341,5 +347,10 @@ class GraphicsOpSpec extends AnyFunSuite {
     (action1 >>= action2).run(GraphicsIOWrapper(graphics))
     verify(graphics, times(1)).getFont
     verify(graphics, times(1)).setFont(new java.awt.Font("Arial", 1, 12))
+
+(getFont >>= setFont).run(GraphicsIOWrapper(graphics))
+val font = new Font("Arial", 1, 12)
+((pure(font) >>= setFont) >> drawString("Hello", 100, 100))
+  .run(GraphicsIOWrapper(graphics))
   }
 }
