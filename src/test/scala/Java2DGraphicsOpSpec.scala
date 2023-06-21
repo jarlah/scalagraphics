@@ -288,19 +288,14 @@ class Java2DGraphicsOpSpec extends AnyFunSuite {
     val graphics = mock[java.awt.Graphics2D]
     when(graphics.getColor).thenReturn(java.awt.Color.BLUE)
     GraphicsOp.draw3DRect(0, 0, 10, 10, true).run(Java2DGraphicsIO(graphics))
-    verify(graphics, times(1)).getColor
-    verify(graphics, times(3)).setColor(any[java.awt.Color])
-    verify(graphics, times(4)).drawLine(anyInt(), anyInt(), anyInt(), anyInt())
+    verify(graphics, times(1)).draw3DRect(0, 0, 10, 10, true)
   }
 
   test("fill3DRect should call the proper method in Graphics api") {
     val graphics = mock[java.awt.Graphics2D]
     when(graphics.getColor).thenReturn(java.awt.Color.BLUE)
     GraphicsOp.fill3DRect(0, 0, 10, 10, false).run(Java2DGraphicsIO(graphics))
-    verify(graphics, times(1)).getColor
-    verify(graphics, times(4)).setColor(any[java.awt.Color])
-    verify(graphics, times(4)).drawLine(anyInt(), anyInt(), anyInt(), anyInt())
-    verify(graphics, times(1)).fillRect(anyInt(), anyInt(), anyInt(), anyInt())
+    verify(graphics, times(1)).fill3DRect(0, 0, 10, 10, false)
   }
 
   test("hitClip should call the proper method in Graphics api") {
@@ -308,7 +303,7 @@ class Java2DGraphicsOpSpec extends AnyFunSuite {
     val rectangle = spy(new Rectangle(0, 0, 10, 10))
     when(graphics.getClipBounds).thenReturn(rectangle)
     GraphicsOp.hitClip(0, 0, 10, 10).run(Java2DGraphicsIO(graphics))
-    verify(rectangle).intersects(0, 0, 10, 10)
+    verify(graphics).hitClip(0, 0, 10, 10)
   }
 
   test("getFontMetrics should call the proper method in Graphics api") {

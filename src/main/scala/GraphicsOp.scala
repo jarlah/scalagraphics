@@ -284,9 +284,6 @@ object GraphicsOp {
       )
     )
 
-  def dispose(): GraphicsOp[Unit] =
-    liftIO(_.dispose())
-
   def drawImage(
       img: Image,
       xform: AffineTransform,

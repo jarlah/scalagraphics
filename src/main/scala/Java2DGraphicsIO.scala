@@ -225,9 +225,6 @@ class Java2DGraphicsIO(g: Graphics2D) extends GraphicsIO {
   ): Boolean =
     g.drawImage(img, dx1, dy1, dx2, dy2, sx1, sy1, sx2, sy2, bgcolor, observer)
 
-  override def dispose(): Unit =
-    g.dispose()
-
   override def addRenderingHints(
       hints: Map[java.awt.RenderingHints.Key, _]
   ): Unit =

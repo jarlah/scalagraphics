@@ -263,8 +263,6 @@ class OpenGLGraphicsIO extends GraphicsIO {
       observer: ImageObserver
   ): Boolean = ???
 
-  override def dispose(): Unit = ???
-
   override def getFontMetrics: FontMetrics = ???
 
   override def drawPolygon(arg0: Polygon): Unit = ???

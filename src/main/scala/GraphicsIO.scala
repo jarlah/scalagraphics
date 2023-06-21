@@ -79,8 +79,6 @@ trait GraphicsIO {
 
   def setColor(arg0: Color): Unit
 
-  def dispose(): Unit
-
   def translate(arg0: Int, arg1: Int): Unit
 
   def clipRect(arg0: Int, arg1: Int, arg2: Int, arg3: Int): Unit
