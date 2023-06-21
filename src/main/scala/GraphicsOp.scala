@@ -28,7 +28,7 @@ import java.awt.{
 }
 import java.text.AttributedCharacterIterator
 import javax.swing.{ImageIcon, JFrame, WindowConstants}
-import scala.annotation.tailrec
+import scala.annotation.{tailrec, targetName}
 import scala.util.Try
 import scala.jdk.CollectionConverters.*
 
@@ -436,6 +436,14 @@ case class GraphicsOp[A](run: GraphicsIO => Either[Throwable, A]) {
 
   def flatMap[B](f: A => GraphicsOp[B]): GraphicsOp[B] =
     GraphicsOp(g => run(g).flatMap(a => f(a).run(g)))
+
+  @targetName("compose")
+  def >>[B](next: GraphicsOp[B]): GraphicsOp[B] =
+    flatMap(_ => next)
+
+  @targetName("bind")
+  def >>=[B](f: A => GraphicsOp[B]): GraphicsOp[B] =
+    flatMap(f)
 }
 
 object GraphicsOp {

@@ -324,4 +324,21 @@ class GraphicsOpSpec extends AnyFunSuite {
     verify(graphics).getFontMetrics(null)
   }
 
+  test("composing two actions with the >> operator") {
+    val graphics = mock[java.awt.Graphics2D]
+    val action1 = GraphicsOp.setFont(new java.awt.Font("Arial", 1, 12))
+    val action2 = GraphicsOp.setFont(new java.awt.Font("Arial", 1, 12))
+    (action1 >> action2).run(GraphicsIOWrapper(graphics))
+    verify(graphics, times(2)).setFont(new java.awt.Font("Arial", 1, 12))
+  }
+
+  test("composing two actions with the >>= operator") {
+    val graphics = mock[java.awt.Graphics2D]
+    when(graphics.getFont).thenReturn(new java.awt.Font("Arial", 1, 12))
+    val action1 = GraphicsOp.getFont
+    val action2 = GraphicsOp.setFont
+    (action1 >>= action2).run(GraphicsIOWrapper(graphics))
+    verify(graphics, times(1)).setFont(new java.awt.Font("Arial", 1, 12))
+    verify(graphics, times(1)).setFont(new java.awt.Font("Arial", 1, 12))
+  }
 }
