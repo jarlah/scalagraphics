@@ -371,7 +371,7 @@ class OpenGLGraphicsIO extends GraphicsIO {
     glUseProgram(shaderProgram)
     glUniformMatrix4fv(transformUniform, false, buffer)
     glBindVertexArray(vao)
-    glDrawArrays(GL_QUADS, 0, 4)
+    glDrawArrays(GL_LINE_LOOP, 0, 4)
     glBindVertexArray(0)
   }
 
