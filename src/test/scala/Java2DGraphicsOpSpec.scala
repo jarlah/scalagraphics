@@ -33,10 +33,12 @@ class Java2DGraphicsOpSpec extends AnyFunSuite {
 
   test("setColor should call the proper method in Graphics api") {
     val graphics = mock[java.awt.Graphics2D]
+    val throwableOrUnit = GraphicsOp
+      .setColor(GraphicsIO.Color.Black)
+      .run(Java2DGraphicsIO(graphics))
+    println(throwableOrUnit)
     assert(
-      GraphicsOp
-        .setColor(GraphicsIO.Black)
-        .run(Java2DGraphicsIO(graphics))
+      throwableOrUnit
         .isRight
     )
     verify(graphics).setColor(java.awt.Color.BLACK)

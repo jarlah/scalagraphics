@@ -30,6 +30,8 @@ class OpenGLGraphicsIO extends GraphicsIO {
   private var windowWidth: Int = _
   private var windowHeight: Int = _
 
+  private var currentColor: GraphicsIO.Color = _
+
   def setupShaderProgram(): Unit = {
     val vertexShaderSource =
       """
@@ -184,11 +186,13 @@ class OpenGLGraphicsIO extends GraphicsIO {
 
   override def translate(x: Int, y: Int): Unit = ???
 
-  override def getColor: Color = ???
+  override def getColor: GraphicsIO.Color =
+    currentColor
 
   override def setColor(c: GraphicsIO.Color): Unit = {
-      glUseProgram(shaderProgram)
-      glUniform4f(colorUniform, c.r, c.g, c.b, c.a)
+    currentColor = c
+    glUseProgram(shaderProgram)
+    glUniform4f(colorUniform, c.r, c.g, c.b, c.a)
   }
 
   override def setPaintMode(): Unit = ???

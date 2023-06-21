@@ -75,7 +75,7 @@ object GraphicsOp {
   def translate(x: Double, y: Double): GraphicsOp[Unit] =
     liftIO(_.translate(x, y))
 
-  def getColor: GraphicsOp[Color] =
+  def getColor: GraphicsOp[GraphicsIO.Color] =
     liftIO(_.getColor)
 
   def setPaintMode(): GraphicsOp[Unit] =

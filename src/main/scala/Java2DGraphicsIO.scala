@@ -33,13 +33,15 @@ class Java2DGraphicsIO(g: Graphics2D) extends GraphicsIO {
     g.drawRect(x, y, width, height)
 
   override def setColor(color: GraphicsIO.Color): Unit =
-    g.setColor(new Color(color.r, color.g, color.b, color.a))
+    Option(color).foreach(color => g.setColor(new Color(color.r, color.g, color.b, color.a)))
+
+  override def getColor: GraphicsIO.Color =
+    Option(g.getColor).map(color =>
+      GraphicsIO.Color.rgba(color.getRed / 255f, color.getGreen / 255f, color.getBlue / 255f, color.getAlpha / 255f)
+    ).orNull
 
   override def translate(x: Int, y: Int): Unit =
     g.translate(x, y)
-
-  override def getColor: Color =
-    g.getColor
 
   override def setPaintMode(): Unit =
     g.setPaintMode()
