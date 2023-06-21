@@ -338,7 +338,7 @@ class GraphicsOpSpec extends AnyFunSuite {
     val action1 = GraphicsOp.getFont
     val action2 = GraphicsOp.setFont
     (action1 >>= action2).run(GraphicsIOWrapper(graphics))
-    verify(graphics, times(1)).setFont(new java.awt.Font("Arial", 1, 12))
+    verify(graphics, times(1)).getFont
     verify(graphics, times(1)).setFont(new java.awt.Font("Arial", 1, 12))
   }
 }
