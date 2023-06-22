@@ -22,13 +22,13 @@ def fillRect(x: Int, y: Int, width: Int, height: Int): GraphicsIO[Unit] =
   Free.liftF(FillRect(x, y, width, height))
 def fillOval(x: Int, y: Int, width: Int, height: Int): GraphicsIO[Unit] =
   Free.liftF(FillOval(x, y, width, height))
-def getColor: GraphicsIO[Color] =
+def getColor: GraphicsIO[Option[Color]] =
   Free.liftF(GetColor())
-def setColor(color: Color): GraphicsIO[Unit] =
+def setColor(color: Option[Color]): GraphicsIO[Unit] =
   Free.liftF(SetColor(color))
-def getFont: GraphicsIO[Font] =
+def getFont: GraphicsIO[Option[Font]] =
   Free.liftF(GetFont())
-def setFont(font: Font): GraphicsIO[Unit] =
+def setFont(font: Option[Font]): GraphicsIO[Unit] =
   Free.liftF(SetFont(font))
 def drawLine(x1: Int, y1: Int, x2: Int, y2: Int): GraphicsIO[Unit] =
   Free.liftF(DrawLine(x1, y1, x2, y2))

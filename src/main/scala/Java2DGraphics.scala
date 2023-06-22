@@ -38,13 +38,13 @@ class Java2DGraphics(g: Graphics) extends GraphicsOpInterpreter{
       case FillRect(x, y, width, height) =>
         IO(g.fillRect(x, y, width, height))
       case SetColor(color) =>
-        IO(g.setColor(new java.awt.Color(color.r, color.g, color.b, color.a)))
+        IO(color.foreach(color => g.setColor(new java.awt.Color(color.r, color.g, color.b, color.a))))
       case GetColor() =>
-        IO(g.getColor).map(c => GraphicsColor.rgba(c.getRed, c.getGreen, c.getBlue, c.getAlpha))
+        IO(Option(g.getColor).map(c => GraphicsColor.rgba(c.getRed, c.getGreen, c.getBlue, c.getAlpha)))
       case SetFont(font) =>
-        IO(g.setFont(new java.awt.Font(font.name, font.style.value, font.size)))
+        IO(font.foreach(font => g.setFont(new java.awt.Font(font.name, font.style.value, font.size))))
       case GetFont() =>
-        IO(g.getFont).map(f => GraphicsFont(f.getName, f.getSize, FontStyle.unsafeFromInt(f.getStyle)))
+        IO(Option(g.getFont).map(f => GraphicsFont(f.getName, f.getSize, FontStyle.unsafeFromInt(f.getStyle))))
     }
   }
 }
