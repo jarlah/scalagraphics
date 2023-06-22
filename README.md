@@ -7,12 +7,15 @@ It can be used like this:
 ```scala
 import com.github.jarlah.scalagraphics.GraphicsOp
 import com.github.jarlah.scalagraphics.Java2DGraphicsIO
+import com.github.jarlah.scalagraphics.GraphicsIO.Color
+import com.github.jarlah.scalagraphics.GraphicsIO.Font
+import com.github.jarlah.scalagraphics.GraphicsIO.FontStyle
 import com.github.jarlah.scalagraphics.GraphicsOp.*
 import java.awt.Graphics
 
 def renderHello: GraphicsOp[Unit] = for {
   _ <- clearRect(0, 0, 800, 600)
-  _ <- setColor(Color.BLACK)
+  _ <- setColor(Color.Black)
   _ <- drawString("Hello", 100, 100)
 } yield ()
 
@@ -24,7 +27,7 @@ or even
 
 ```scala
 (getFont >>= setFont).run(Java2DGraphicsIO(graphics))
-val font = new Font("Arial", 1, 12)
+val font = new Font("Arial", 12, FontStyle.Bold)
 
 ((pure(font) >>= setFont) >> drawString("Hello", 100, 100))
   .run(Java2DGraphicsIO(graphics))
