@@ -21,7 +21,7 @@ import java.awt.image.{BufferedImage, BufferedImageOp, ImageObserver, RenderedIm
 import java.text.AttributedCharacterIterator
 
 
-class OpenGLGraphicsIO extends GraphicsIOInterpreter {
+class OpenGLGraphics extends GraphicsOpInterpreter {
 
   def interpret: GraphicsOp ~> IO = new (GraphicsOp ~> IO) {
     override def apply[A](fa: GraphicsOp[A]): IO[A] = fa match {

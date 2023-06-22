@@ -9,7 +9,7 @@ import scala.jdk.CollectionConverters.*
 import java.awt.{BasicStroke, Color, Font, Rectangle}
 import com.github.jarlah.scalagraphics.Black
 
-class Java2DGraphicsOpSpec extends AnyFunSuite {
+class Java2DGraphicsSpec extends AnyFunSuite {
 
 }
 //

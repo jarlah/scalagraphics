@@ -3,7 +3,7 @@ package com.github.jarlah.scalagraphics
 import cats.effect.IO
 import cats.~>
 
-trait GraphicsIOInterpreter {
+trait GraphicsOpInterpreter {
   import cats.effect.unsafe.implicits.global
 
   def interpret: GraphicsOp ~> IO

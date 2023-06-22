@@ -12,7 +12,7 @@ import java.awt.image.{BufferedImage, BufferedImageOp, ImageObserver, RenderedIm
 import java.text.AttributedCharacterIterator
 import scala.jdk.CollectionConverters.*
 
-class Java2DGraphicsIO(g: Graphics) extends GraphicsIOInterpreter{
+class Java2DGraphics(g: Graphics) extends GraphicsOpInterpreter{
   def interpret: GraphicsOp ~> IO = new(GraphicsOp ~> IO) {
     override def apply[A](fa: GraphicsOp[A]): IO[A] = fa match {
       case ClearRect(x, y, width, height) =>
