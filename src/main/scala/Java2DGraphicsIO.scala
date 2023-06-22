@@ -1,15 +1,12 @@
 package com.github.jarlah.scalagraphics
 
+import com.github.jarlah.scalagraphics.GraphicsIO.FontStyle
+
 import java.awt.*
 import java.awt.font.{FontRenderContext, GlyphVector}
 import java.awt.geom.AffineTransform
 import java.awt.image.renderable.RenderableImage
-import java.awt.image.{
-  BufferedImage,
-  BufferedImageOp,
-  ImageObserver,
-  RenderedImage
-}
+import java.awt.image.{BufferedImage, BufferedImageOp, ImageObserver, RenderedImage}
 import java.text.AttributedCharacterIterator
 import scala.jdk.CollectionConverters.*
 
@@ -51,12 +48,12 @@ class Java2DGraphicsIO(g: Graphics2D) extends GraphicsIO {
 
   override def getFont: GraphicsIO.Font = {
     Option(g.getFont).map(font =>
-      GraphicsIO.Font(font.getName, font.getStyle, font.getSize)
+      GraphicsIO.Font(font.getName, font.getSize, FontStyle.unsafeFromInt(font.getStyle))
     ).orNull
   }
 
   override def setFont(font: GraphicsIO.Font): Unit =
-    g.setFont(new Font(font.name, font.style, font.size))
+    g.setFont(new Font(font.name, font.style.value, font.size))
 
   override def getFontMetrics(f: Font): FontMetrics =
     g.getFontMetrics(f)

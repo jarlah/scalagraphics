@@ -1,5 +1,6 @@
 package com.github.jarlah.scalagraphics
 
+import GraphicsIO.FontStyle
 import org.joml.Matrix4f
 
 import java.awt.font.{FontRenderContext, GlyphVector}
@@ -30,7 +31,7 @@ class OpenGLGraphicsIO extends GraphicsIO {
   private var windowHeight: Int = _
 
   private var currentColor: GraphicsIO.Color = GraphicsIO.Color.Black
-  private var currentFont: GraphicsIO.Font = GraphicsIO.Font("Arial", 14, 0)
+  private var currentFont: GraphicsIO.Font = GraphicsIO.Font("Arial", 14, FontStyle.Plain)
 
   private var nanoVgPointer: Long = -1
 

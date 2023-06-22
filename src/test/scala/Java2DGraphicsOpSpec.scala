@@ -54,7 +54,7 @@ class Java2DGraphicsOpSpec extends AnyFunSuite {
   test("setFont should call the proper method in Graphics api") {
     val graphics = mock[java.awt.Graphics2D]
     GraphicsOp
-      .setFont(GraphicsIO.Font("Arial", 1, 12))
+      .setFont(GraphicsIO.Font("Arial", 12, GraphicsIO.FontStyle.Bold))
       .run(Java2DGraphicsIO(graphics))
     verify(graphics).setFont(new java.awt.Font("Arial", 1, 12))
   }
@@ -330,8 +330,8 @@ class Java2DGraphicsOpSpec extends AnyFunSuite {
 
   test("composing two actions with the >> operator") {
     val graphics = mock[java.awt.Graphics2D]
-    val action1 = GraphicsOp.setFont(GraphicsIO.Font("Arial", 1, 12))
-    val action2 = GraphicsOp.setFont(GraphicsIO.Font("Arial", 1, 13))
+    val action1 = GraphicsOp.setFont(GraphicsIO.Font("Arial", 12, GraphicsIO.FontStyle.Bold))
+    val action2 = GraphicsOp.setFont(GraphicsIO.Font("Arial", 13, GraphicsIO.FontStyle.Bold))
     (action1 >> action2).run(Java2DGraphicsIO(graphics))
     verify(graphics, times(1)).setFont(new java.awt.Font("Arial", 1, 12))
     verify(graphics, times(1)).setFont(new java.awt.Font("Arial", 1, 13))
