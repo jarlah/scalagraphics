@@ -4,10 +4,8 @@ import cats.effect.IO
 import cats.~>
 
 trait GraphicsOpInterpreter {
-  import cats.effect.unsafe.implicits.global
+  def interpret: GraphicsOp ~> Option
 
-  def interpret: GraphicsOp ~> IO
-
-  def run[A](program: GraphicsIO[A]): A =
-    program.foldMap(interpret).unsafeRunSync()
+  def run[A](program: GraphicsIO[A]): Option[A] =
+    program.foldMap(interpret)
 }
