@@ -16,20 +16,9 @@ object FontStyle {
   }
 }
 
-trait Font {
-  val name: String
-  val style: FontStyle
-  val size: Int
-
-  override def toString: String = {
-    name + "-" + style + "-" + size
-  }
-}
+case class Font(name: String, size: Int, style: FontStyle)
 
 object Font {
-  def apply(nameStr: String, sizeInt: Int, styleInt: FontStyle): Font = new Font {
-    override val name: String = nameStr
-    override val size: Int = sizeInt
-    override val style: FontStyle = styleInt
-  }
+  def apply(nameStr: String, sizeInt: Int, styleInt: Int): Font =
+    Font(nameStr, sizeInt, FontStyle.unsafeFromInt(styleInt))
 }
