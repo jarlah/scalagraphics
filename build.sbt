@@ -1,4 +1,4 @@
-ThisBuild / version := "0.3.3-SNAPSHOT"
+ThisBuild / version := "0.3.4-SNAPSHOT"
 
 ThisBuild / scalaVersion := "3.3.0"
 
@@ -14,6 +14,8 @@ lazy val root = (project in file("."))
       "org.lwjgl" % "lwjgl-nanovg" % "3.3.1" % "provided",
       "org.joml" % "joml" % "1.10.5" % "provided"
     ),
+    libraryDependencies += "org.typelevel" %% "cats-free" % "2.9.0",
+    libraryDependencies += "org.typelevel" %% "cats-effect" % "3.5.0",
     libraryDependencies += "org.scalactic" %% "scalactic" % "3.2.16",
     libraryDependencies += "org.scalatest" %% "scalatest" % "3.2.16" % "test",
     libraryDependencies += "org.scalatestplus" %% "mockito-4-6" % "3.2.15.0" % "test",
