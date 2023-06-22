@@ -10,8 +10,9 @@ import org.lwjgl.opengl.GL20.*
 import org.lwjgl.opengl.GL30.*
 import org.lwjgl.system.MemoryStack.stackPush
 import org.lwjgl.system.MemoryUtil.NULL
-
 import cats.free.Free
+
+import scala.util.*
 
 class OpenGLGraphics extends GraphicsOpInterpreter {
 
@@ -181,17 +182,17 @@ class OpenGLGraphics extends GraphicsOpInterpreter {
     glBindVertexArray(0)
   }
 
-  def interpret: GraphicsOp ~> Option = new (GraphicsOp ~> Option) {
-    override def apply[A](fa: GraphicsOp[A]): Option[A] = fa match {
-      case SetColor(c) => Some(setColor(c))
-      case SetFont(f) => Some(setFont(f))
-      case DrawString(text, x, y) => Some(drawString(text, x, y))
-      case DrawRect(x, y, width, height) => Some(drawRect(x, y, width, height))
-      case FillRect(x, y, width, height) => Some(fillRect(x, y, width, height))
-      case ClearRect(x, y, width, height) => Some(clearRect(x, y, width, height))
-      case GetColor() => Some(getColor)
-      case GetFont() => Some(getFont)
-      case other => None
+  def interpret: GraphicsOp ~> Try = new (GraphicsOp ~> Try) {
+    override def apply[A](fa: GraphicsOp[A]): Try[A] = fa match {
+      case SetColor(c) => Try(setColor(c))
+      case SetFont(f) => Try(setFont(f))
+      case DrawString(text, x, y) => Try(drawString(text, x, y))
+      case DrawRect(x, y, width, height) => Try(drawRect(x, y, width, height))
+      case FillRect(x, y, width, height) => Try(fillRect(x, y, width, height))
+      case ClearRect(x, y, width, height) => Try(clearRect(x, y, width, height))
+      case GetColor() => Try(getColor)
+      case GetFont() => Try(getFont)
+      case other => Failure(new RuntimeException(s"Unsupported operation: $other"))
     }
   }
 }

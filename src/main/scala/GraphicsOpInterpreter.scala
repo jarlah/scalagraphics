@@ -3,9 +3,14 @@ package com.github.jarlah.scalagraphics
 import cats.effect.IO
 import cats.~>
 
-trait GraphicsOpInterpreter {
-  def interpret: GraphicsOp ~> Option
+import scala.util.Try
 
-  def run[A](program: GraphicsIO[A]): Option[A] =
-    program.foldMap(interpret)
+trait GraphicsOpInterpreter {
+  def interpret: GraphicsOp ~> Try
+
+  def run[A](program: GraphicsIO[A]): A =
+    program.foldMap(interpret).toEither match {
+      case Left(e) => throw e
+      case Right(a) => a
+    }
 }
