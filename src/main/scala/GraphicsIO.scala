@@ -24,10 +24,14 @@ def fillOval(x: Int, y: Int, width: Int, height: Int): GraphicsIO[Unit] =
   Free.liftF(FillOval(x, y, width, height))
 def getColor: GraphicsIO[Option[Color]] =
   Free.liftF(GetColor())
+def setColor(color: Color): GraphicsIO[Unit] =
+  Free.liftF(SetColor(Option(color)))
 def setColor(color: Option[Color]): GraphicsIO[Unit] =
   Free.liftF(SetColor(color))
 def getFont: GraphicsIO[Option[Font]] =
   Free.liftF(GetFont())
+def setFont(font: Font): GraphicsIO[Unit] =
+  Free.liftF(SetFont(Option(font)))
 def setFont(font: Option[Font]): GraphicsIO[Unit] =
   Free.liftF(SetFont(font))
 def drawLine(x1: Int, y1: Int, x2: Int, y2: Int): GraphicsIO[Unit] =
