@@ -1,23 +1,22 @@
 package com.github.jarlah.scalagraphics
 
 import GraphicsIO.FontStyle
-import org.joml.Matrix4f
 
-import java.awt.font.{FontRenderContext, GlyphVector}
-import java.awt.geom.AffineTransform
-import java.awt.image.renderable.RenderableImage
-import java.awt.image.{BufferedImage, BufferedImageOp, ImageObserver, RenderedImage}
-import java.awt.*
-import java.text.AttributedCharacterIterator
-import org.lwjgl.opengl.GL20.*
-import org.lwjgl.opengl.GL30.*
-import org.lwjgl.system.MemoryStack.stackPush
-import org.lwjgl.system.MemoryUtil.NULL
+import org.joml.Matrix4f
 import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL11.*
 import org.lwjgl.opengl.GL15.*
 import org.lwjgl.opengl.GL20.*
 import org.lwjgl.opengl.GL30.*
+import org.lwjgl.system.MemoryStack.stackPush
+import org.lwjgl.system.MemoryUtil.NULL
+
+import java.awt.*
+import java.awt.font.{FontRenderContext, GlyphVector}
+import java.awt.geom.AffineTransform
+import java.awt.image.renderable.RenderableImage
+import java.awt.image.{BufferedImage, BufferedImageOp, ImageObserver, RenderedImage}
+import java.text.AttributedCharacterIterator
 
 
 class OpenGLGraphicsIO extends GraphicsIO {
@@ -132,11 +131,11 @@ class OpenGLGraphicsIO extends GraphicsIO {
   }
 
   override def drawString(text: String, x: Int, y: Int): Unit = {
-    import org.lwjgl.nanovg.NanoVG._
-    import org.lwjgl.nanovg.NanoVGGL3._
-    import org.lwjgl.system.MemoryStack._
-    import org.lwjgl.system.MemoryUtil._
     import org.lwjgl.nanovg.NVGColor
+    import org.lwjgl.nanovg.NanoVG.*
+    import org.lwjgl.nanovg.NanoVGGL3.*
+    import org.lwjgl.system.MemoryStack.*
+    import org.lwjgl.system.MemoryUtil.*
 
     if (nanoVgPointer == -1) {
         throw new RuntimeException("NanoVG pointer not set.")
@@ -162,6 +161,13 @@ class OpenGLGraphicsIO extends GraphicsIO {
 
   override def fillRect(x: Int, y: Int, width: Int, height: Int): Unit = {
     drawOrFillRect(x, y, width, height, GL_QUADS)
+  }
+
+  override def clearRect(arg0: Int, arg1: Int, arg2: Int, arg3: Int): Unit = {
+    glScissor(arg0, arg1, arg2, arg3)
+    glEnable(GL_SCISSOR_TEST)
+    glClear(GL_COLOR_BUFFER_BIT)
+    glDisable(GL_SCISSOR_TEST)
   }
 
   private def drawOrFillRect(x: Int, y: Int, width: Int, height: Int, drawType: Int): Unit = {
