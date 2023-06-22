@@ -33,4 +33,4 @@ val font = new Font("Arial", 12, FontStyle.Bold)
   .run(Java2DGraphicsIO(graphics))
 ```
 
-To see how it can be used in an actual Java 2D game, see https://github.com/jarlah/scalagraphics-demo
+To see how it can be used in an actual Java 2D game, see https://github.com/jarlah/scalagraphics-demo, or to see how it can be used in a OpenGL game, see https://github.com/jarlah/scalagraphics-demo-opengl.
