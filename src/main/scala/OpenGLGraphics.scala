@@ -44,13 +44,18 @@ class OpenGLGraphics extends GraphicsOpInterpreter {
         |    gl_Position = transform * vec4(aPos, 1.0);
         |}
         |""".stripMargin
-    val fragmentShaderSource = "#version 330 core\n" +
-      "out vec4 FragColor;\n" +
-      "uniform vec4 color;\n" +
-      "void main()\n" +
-      "{\n" +
-      "   FragColor = color;\n" +
-      "}"
+    val fragmentShaderSource =
+      """
+        |#version 330 core
+        |
+        |out vec4 FragColor;
+        |uniform vec4 color;
+        |
+        |void main()
+        |{
+        |   FragColor = color;
+        |}
+        |""".stripMargin
 
     val vertexShader = glCreateShader(GL_VERTEX_SHADER)
     glShaderSource(vertexShader, vertexShaderSource)
