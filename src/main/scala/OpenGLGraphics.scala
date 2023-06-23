@@ -12,9 +12,11 @@ import org.lwjgl.system.MemoryStack.stackPush
 import org.lwjgl.system.MemoryUtil.NULL
 import cats.free.Free
 import GraphicsOp.*
-
 import Color.Black
 import FontStyle.Plain
+
+import org.lwjgl.nanovg.NanoVG.nvgCreateFont
+import org.lwjgl.nanovg.NanoVGGL3.*
 
 import scala.util.*
 
@@ -31,7 +33,7 @@ class OpenGLGraphics extends GraphicsOpInterpreter {
   private var currentColor: Color = Black
   private var currentFont: Font = Font("Arial", 14, Plain)
 
-  private var nanoVgPointer: Long = -1
+  private var nanoVgPointer: Long = NULL
 
   // TODO: this should be setup by the application
   // instead lets set shaderProgram, colorUniform, transformUniform, vao, vbo etc with setters
@@ -107,13 +109,21 @@ class OpenGLGraphics extends GraphicsOpInterpreter {
     glBindVertexArray(0)
   }
 
+  def setupNanoVg(): Unit = {
+    nanoVgPointer = nvgCreate(NVG_ANTIALIAS | NVG_STENCIL_STROKES)
+    if (nanoVgPointer == NULL) {
+      throw new RuntimeException("Could not init nanovg.")
+    }
+
+    val nanoVgFont = nvgCreateFont(nanoVgPointer, currentFont.name, s"fonts/${currentFont.name}.ttf")
+    if (nanoVgFont == -1) {
+      throw new RuntimeException("Could not add font.")
+    }
+  }
+
   def setWindowSize(width: Int, height: Int): Unit = {
     windowWidth = width
     windowHeight = height
-  }
-
-  def setNanoVgPointer(pointer: Long): Unit = {
-    nanoVgPointer = pointer
   }
 
   def getWindowWidth: Int = windowWidth
@@ -131,7 +141,7 @@ class OpenGLGraphics extends GraphicsOpInterpreter {
     })
   }
 
-  private def setFont(font: Option[Font]): Unit = {
+  def setFont(font: Option[Font]): Unit = {
     currentFont = font.orNull
   }
 
