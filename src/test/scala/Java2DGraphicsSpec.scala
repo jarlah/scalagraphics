@@ -8,6 +8,8 @@ import org.scalatest.Assertions.*
 
 import scala.jdk.CollectionConverters.*
 import GraphicsOp.Dimension
+
+import com.github.jarlah.scalagraphics.Color.Black
 import org.mockito.ArgumentMatchers
 
 

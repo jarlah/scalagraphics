@@ -12,6 +12,10 @@ import org.lwjgl.system.MemoryStack.stackPush
 import org.lwjgl.system.MemoryUtil.NULL
 import cats.free.Free
 import GraphicsOp.*
+
+import Color.Black
+import FontStyle.Plain
+
 import scala.util.*
 
 class OpenGLGraphics extends GraphicsOpInterpreter {
