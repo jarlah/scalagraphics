@@ -6,7 +6,7 @@ It can be used like this:
 
 ```scala
 import com.github.jarlah.scalagraphics.GraphicsOp
-import com.github.jarlah.scalagraphics.Java2DGraphicsIO
+import com.github.jarlah.scalagraphics.Java2DGraphics
 import com.github.jarlah.scalagraphics.GraphicsOp.*
 
 def renderHello: GraphicsOp[Unit] = for {
