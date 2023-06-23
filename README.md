@@ -7,30 +7,21 @@ It can be used like this:
 ```scala
 import com.github.jarlah.scalagraphics.GraphicsOp
 import com.github.jarlah.scalagraphics.Java2DGraphicsIO
-import com.github.jarlah.scalagraphics.GraphicsIO.Color
-import com.github.jarlah.scalagraphics.GraphicsIO.Font
-import com.github.jarlah.scalagraphics.GraphicsIO.FontStyle
 import com.github.jarlah.scalagraphics.GraphicsOp.*
-import java.awt.Graphics
 
 def renderHello: GraphicsOp[Unit] = for {
   _ <- clearRect(0, 0, 800, 600)
-  _ <- setColor(Color.Black)
+  _ <- setColor(Black)
   _ <- drawString("Hello", 100, 100)
 } yield ()
 
-val g: Graphics = // somehow get graphics object
-  renderHello.run(Java2DGraphicsIO(g))
+val g: java.awt.Graphics = // somehow get graphics object
+Java2DGraphics(g).run(renderHello) match {
+  case Left(error) => println(s"Error while rendering: $error")
+  case Right(_) =>
+}
 ```
 
-or even
-
-```scala
-(getFont >>= setFont).run(Java2DGraphicsIO(graphics))
-val font = new Font("Arial", 12, FontStyle.Bold)
-
-((pure(font) >>= setFont) >> drawString("Hello", 100, 100))
-  .run(Java2DGraphicsIO(graphics))
-```
+The library is using the Cats Free Monad to create a DSL for graphics operations. The operations are then interpreted to Java Graphics operations. The library also provides a way to interpret the operations to OpenGL operations.
 
 To see how it can be used in an actual Java 2D game, see https://github.com/jarlah/scalagraphics-demo, or to see how it can be used in a OpenGL game, see https://github.com/jarlah/scalagraphics-demo-opengl.
