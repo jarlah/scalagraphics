@@ -17,6 +17,7 @@ import FontStyle.Plain
 
 import org.lwjgl.nanovg.NanoVG.nvgCreateFont
 import org.lwjgl.nanovg.NanoVGGL3.*
+import org.lwjgl.opengl.GL13._
 
 import scala.util.*
 
@@ -25,6 +26,8 @@ class OpenGLGraphics extends GraphicsOpInterpreter {
   private var shaderProgram: Int = _
   private var colorUniform: Int = _
   private var transformUniform: Int = _
+  private var useTextureUniform: Int = _
+
   private var vao: Int = _
   private var vbo: Int = _
   private var windowWidth: Int = _
@@ -43,23 +46,38 @@ class OpenGLGraphics extends GraphicsOpInterpreter {
         |#version 330 core
         |
         |layout (location = 0) in vec3 aPos;
+        |layout (location = 1) in vec2 aTexCoord;
+        |
+        |out vec2 TexCoord;
+        |
         |uniform mat4 transform;
         |
         |void main()
         |{
         |    gl_Position = transform * vec4(aPos, 1.0);
+        |    TexCoord = aTexCoord;
         |}
         |""".stripMargin
+
     val fragmentShaderSource =
       """
         |#version 330 core
         |
         |out vec4 FragColor;
+        |
+        |in vec2 TexCoord;
+        |
+        |uniform sampler2D texture1;
         |uniform vec4 color;
+        |uniform bool useTexture;
         |
         |void main()
         |{
-        |   FragColor = color;
+        |    if (useTexture) {
+        |        FragColor = texture(texture1, TexCoord);
+        |    } else {
+        |        FragColor = color;
+        |    }
         |}
         |""".stripMargin
 
@@ -81,6 +99,7 @@ class OpenGLGraphics extends GraphicsOpInterpreter {
 
     colorUniform = glGetUniformLocation(shaderProgram, "color")
     transformUniform = glGetUniformLocation(shaderProgram, "transform")
+    useTextureUniform = glGetUniformLocation(shaderProgram, "useTexture")
   }
 
   // TODO: this should be setup by the application
@@ -92,18 +111,21 @@ class OpenGLGraphics extends GraphicsOpInterpreter {
     vbo = glGenBuffers()
     glBindBuffer(GL_ARRAY_BUFFER, vbo)
 
-    val vertices = BufferUtils.createFloatBuffer(12)
+    val vertices = BufferUtils.createFloatBuffer(20) // 5 floats per vertex: 3 for position, 2 for texture coordinates
     vertices.put(Array(
-      0.0f, 0.0f, 0.0f,
-      1.0f, 0.0f, 0.0f,
-      1.0f, 1.0f, 0.0f,
-      0.0f, 1.0f, 0.0f
+      0.0f, 0.0f, 0.0f, 0.0f, 0.0f, // Top-left corner
+      1.0f, 0.0f, 0.0f, 1.0f, 0.0f, // Top-right corner
+      1.0f, 1.0f, 0.0f, 1.0f, 1.0f, // Bottom-right corner
+      0.0f, 1.0f, 0.0f, 0.0f, 1.0f  // Bottom-left corner
     ))
     vertices.flip()
 
     glBufferData(GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW)
-    glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0)
+    glVertexAttribPointer(0, 3, GL_FLOAT, false, 20, 0) // 20 = stride, the space between each set of 5 values
     glEnableVertexAttribArray(0)
+
+    glVertexAttribPointer(1, 2, GL_FLOAT, false, 20, 12) // 12 = offset, the space from the start of a set of 5 values to the texture coordinates
+    glEnableVertexAttribArray(1)
 
     glBindBuffer(GL_ARRAY_BUFFER, 0)
     glBindVertexArray(0)
@@ -195,9 +217,57 @@ class OpenGLGraphics extends GraphicsOpInterpreter {
     transform.get(buffer)
 
     glUseProgram(shaderProgram)
+    glUniform1i(useTextureUniform, 0)
     glUniformMatrix4fv(transformUniform, false, buffer)
     glBindVertexArray(vao)
     glDrawArrays(drawType, 0, 4)
+    glBindVertexArray(0)
+  }
+
+  private def drawImage(img: Image, x: Int, y: Int, width: Int, height: Int): Unit = {
+    // Load the image into a texture
+    val textureId = glGenTextures()
+    glBindTexture(GL_TEXTURE_2D, textureId)
+
+    // Set texture parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR)
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR)
+
+    // Upload the image data to the texture
+    val imgBuffer = img.pixels
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, img.width, img.height, 0, GL_RGBA, GL_UNSIGNED_BYTE, imgBuffer)
+
+    // Unbind the texture
+    glBindTexture(GL_TEXTURE_2D, 0)
+
+    // Set the color to white before rendering the texture
+    glUseProgram(shaderProgram)
+    glUniform4f(colorUniform, 1.0f, 1.0f, 1.0f, 1.0f)
+
+    // Now draw a rectangle with the texture applied
+    glBindVertexArray(vao)
+    glBindTexture(GL_TEXTURE_2D, textureId)
+
+    // Set the active texture and bind it
+    glActiveTexture(GL_TEXTURE0)
+    glBindTexture(GL_TEXTURE_2D, textureId)
+    glUniform1i(glGetUniformLocation(shaderProgram, "texture1"), 0)
+
+    glUniform1i(useTextureUniform, 1)  // in drawImage
+
+    val projection = new Matrix4f().ortho2D(0, windowWidth, windowHeight, 0)
+    val model = new Matrix4f().identity().translate(x, y, 0).scale(width, height, 1)
+    val transform = new Matrix4f(projection).mul(model)
+    val transformBuffer = BufferUtils.createFloatBuffer(16)
+    transform.get(transformBuffer)
+
+    glUseProgram(shaderProgram)
+    glUniformMatrix4fv(transformUniform, false, transformBuffer)
+    glDrawArrays(GL_QUADS, 0, 4)
+
+    glBindTexture(GL_TEXTURE_2D, 0)
     glBindVertexArray(0)
   }
 
@@ -211,6 +281,8 @@ class OpenGLGraphics extends GraphicsOpInterpreter {
       case ClearRect(x, y, Dimension(width, height)) => Try(clearRect(x, y, width, height)).toEither
       case GetColor() => Try(getColor).toEither
       case GetFont() => Try(getFont).toEither
+      case DrawImage(img, x, y, Some(Dimension(width, height)), _) => Try(drawImage(img, x, y, width, height)).map(_ => true).toEither
+      case DrawImage(img, x, y, None, _) => Try(drawImage(img, x, y, img.width, img.height)).map(_ => true).toEither
       case other => Left(new RuntimeException(s"Unsupported operation: $other"))
     }
   }
