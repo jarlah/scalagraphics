@@ -6,11 +6,10 @@ import cats.~>
 import scala.util.Try
 
 trait GraphicsOpInterpreter {
-  def interpret: GraphicsOp ~> Try
+  type EitherThrowable[A] = Either[Throwable, A]
 
-  def run[A](program: GraphicsIO[A]): A =
-    program.foldMap(interpret).toEither match {
-      case Left(e) => throw e
-      case Right(a) => a
-    }
+  def interpret: GraphicsOp ~> EitherThrowable
+
+  def run[A](program: GraphicsIO[A]): EitherThrowable[A] =
+    program.foldMap(interpret)
 }

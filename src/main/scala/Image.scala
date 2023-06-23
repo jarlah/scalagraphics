@@ -1,6 +1,12 @@
 package com.github.jarlah.scalagraphics
 
-case class Image(width: Int, height: Int, pixels: Array[Int])
+case class Image(width: Int, height: Int, pixels: Array[Int]) {
+  def toJavaAwtImage: java.awt.Image = {
+    val bufferedImage = new java.awt.image.BufferedImage(width, height, java.awt.image.BufferedImage.TYPE_INT_ARGB)
+    bufferedImage.setRGB(0, 0, width, height, pixels, 0, width)
+    bufferedImage
+  }
+}
 
 object Image {
   def apply(width: Int, height: Int): Image = {
