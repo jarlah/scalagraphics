@@ -1,26 +1,20 @@
 package com.github.jarlah.scalagraphics
 
-import GraphicsIO.FontStyle
+import cats.effect.IO
+import cats.~>
 import org.joml.Matrix4f
-
-import java.awt.font.{FontRenderContext, GlyphVector}
-import java.awt.geom.AffineTransform
-import java.awt.image.renderable.RenderableImage
-import java.awt.image.{BufferedImage, BufferedImageOp, ImageObserver, RenderedImage}
-import java.awt.*
-import java.text.AttributedCharacterIterator
-import org.lwjgl.opengl.GL20.*
-import org.lwjgl.opengl.GL30.*
-import org.lwjgl.system.MemoryStack.stackPush
-import org.lwjgl.system.MemoryUtil.NULL
 import org.lwjgl.BufferUtils
 import org.lwjgl.opengl.GL11.*
 import org.lwjgl.opengl.GL15.*
 import org.lwjgl.opengl.GL20.*
 import org.lwjgl.opengl.GL30.*
+import org.lwjgl.system.MemoryStack.stackPush
+import org.lwjgl.system.MemoryUtil.NULL
+import cats.free.Free
+import GraphicsOp.*
+import scala.util.*
 
-
-class OpenGLGraphicsIO extends GraphicsIO {
+class OpenGLGraphics extends GraphicsOpInterpreter {
 
   private var shaderProgram: Int = _
   private var colorUniform: Int = _
@@ -30,8 +24,8 @@ class OpenGLGraphicsIO extends GraphicsIO {
   private var windowWidth: Int = _
   private var windowHeight: Int = _
 
-  private var currentColor: GraphicsIO.Color = GraphicsIO.Color.Black
-  private var currentFont: GraphicsIO.Font = GraphicsIO.Font("Arial", 14, FontStyle.Plain)
+  private var currentColor: Color = Black
+  private var currentFont: Font = Font("Arial", 14, Plain)
 
   private var nanoVgPointer: Long = -1
 
@@ -114,32 +108,35 @@ class OpenGLGraphicsIO extends GraphicsIO {
   }
 
   def getWindowWidth: Int = windowWidth
+
   def getWindowHeight: Int = windowHeight
 
-  override def getColor: GraphicsIO.Color =
-    currentColor
+  private def getColor: Option[Color] =
+    Option(currentColor)
 
-  override def setColor(c: GraphicsIO.Color): Unit = {
-    Option(c).foreach(color => {
-        currentColor = color
-        glUseProgram(shaderProgram)
-        glUniform4f(colorUniform, color.r, color.g, color.b, color.a)
+  private def setColor(c: Option[Color]): Unit = {
+    c.foreach(color => {
+      currentColor = color
+      glUseProgram(shaderProgram)
+      glUniform4f(colorUniform, color.r, color.g, color.b, color.a)
     })
   }
 
-  override def setFont(font: GraphicsIO.Font): Unit = {
-    currentFont = font
+  private def setFont(font: Option[Font]): Unit = {
+    currentFont = font.orNull
   }
 
-  override def drawString(text: String, x: Int, y: Int): Unit = {
-    import org.lwjgl.nanovg.NanoVG._
-    import org.lwjgl.nanovg.NanoVGGL3._
-    import org.lwjgl.system.MemoryStack._
-    import org.lwjgl.system.MemoryUtil._
+  private def getFont = Option(currentFont)
+
+  private def drawString(text: String, x: Int, y: Int): Unit = {
     import org.lwjgl.nanovg.NVGColor
+    import org.lwjgl.nanovg.NanoVG.*
+    import org.lwjgl.nanovg.NanoVGGL3.*
+    import org.lwjgl.system.MemoryStack.*
+    import org.lwjgl.system.MemoryUtil.*
 
     if (nanoVgPointer == -1) {
-        throw new RuntimeException("NanoVG pointer not set.")
+      throw new RuntimeException("NanoVG pointer not set.")
     }
 
     nvgBeginFrame(nanoVgPointer, windowWidth, windowHeight, 1)
@@ -156,12 +153,19 @@ class OpenGLGraphicsIO extends GraphicsIO {
     nvgEndFrame(nanoVgPointer)
   }
 
-  override def drawRect(x: Int, y: Int, width: Int, height: Int): Unit = {
+  private def drawRect(x: Int, y: Int, width: Int, height: Int): Unit = {
     drawOrFillRect(x, y, width, height, GL_LINE_LOOP)
   }
 
-  override def fillRect(x: Int, y: Int, width: Int, height: Int): Unit = {
+  private def fillRect(x: Int, y: Int, width: Int, height: Int): Unit = {
     drawOrFillRect(x, y, width, height, GL_QUADS)
+  }
+
+  private def clearRect(arg0: Int, arg1: Int, arg2: Int, arg3: Int): Unit = {
+    glScissor(arg0, arg1, arg2, arg3)
+    glEnable(GL_SCISSOR_TEST)
+    glClear(GL_COLOR_BUFFER_BIT)
+    glDisable(GL_SCISSOR_TEST)
   }
 
   private def drawOrFillRect(x: Int, y: Int, width: Int, height: Int, drawType: Int): Unit = {
@@ -176,5 +180,19 @@ class OpenGLGraphicsIO extends GraphicsIO {
     glBindVertexArray(vao)
     glDrawArrays(drawType, 0, 4)
     glBindVertexArray(0)
+  }
+
+  def interpret: GraphicsOp ~> EitherThrowable = new (GraphicsOp ~> EitherThrowable) {
+    override def apply[A](fa: GraphicsOp[A]): EitherThrowable[A] = fa match {
+      case SetColor(c) => Try(setColor(c)).toEither
+      case SetFont(f) => Try(setFont(f)).toEither
+      case DrawString(text, x, y) => Try(drawString(text, x, y)).toEither
+      case DrawRect(x, y, Dimension(width, height)) => Try(drawRect(x, y, width, height)).toEither
+      case FillRect(x, y, Dimension(width, height)) => Try(fillRect(x, y, width, height)).toEither
+      case ClearRect(x, y, Dimension(width, height)) => Try(clearRect(x, y, width, height)).toEither
+      case GetColor() => Try(getColor).toEither
+      case GetFont() => Try(getFont).toEither
+      case other => Left(new RuntimeException(s"Unsupported operation: $other"))
+    }
   }
 }
