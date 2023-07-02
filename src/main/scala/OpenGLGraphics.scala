@@ -24,6 +24,9 @@ import scala.util.*
 class OpenGLGraphics extends GraphicsOpInterpreter {
 
   private var shaderProgram: Int = _
+
+  private var lineShaderProgram: Int = _
+
   private var colorUniform: Int = _
   private var transformUniform: Int = _
   private var useTextureUniform: Int = _
@@ -96,6 +99,50 @@ class OpenGLGraphics extends GraphicsOpInterpreter {
 
     glDeleteShader(vertexShader)
     glDeleteShader(fragmentShader)
+
+    val lineVertexShaderSource =
+      """
+        |#version 330 core
+        |
+        |layout (location = 0) in vec3 aPos;
+        |
+        |uniform mat4 transform;
+        |
+        |void main()
+        |{
+        |    gl_Position = transform * vec4(aPos, 1.0);
+        |}
+        |""".stripMargin
+
+    val lineFragmentShaderSource =
+      """
+        |#version 330 core
+        |
+        |out vec4 FragColor;
+        |
+        |uniform vec4 color;
+        |
+        |void main()
+        |{
+        |    FragColor = color;
+        |}
+        |""".stripMargin
+
+    val lineVertexShader = glCreateShader(GL_VERTEX_SHADER)
+    glShaderSource(lineVertexShader, lineVertexShaderSource)
+    glCompileShader(lineVertexShader)
+
+    val lineFragmentShader = glCreateShader(GL_FRAGMENT_SHADER)
+    glShaderSource(lineFragmentShader, lineFragmentShaderSource)
+    glCompileShader(lineFragmentShader)
+
+    lineShaderProgram = glCreateProgram()
+    glAttachShader(lineShaderProgram, lineVertexShader)
+    glAttachShader(lineShaderProgram, lineFragmentShader)
+    glLinkProgram(lineShaderProgram)
+
+    glDeleteShader(lineVertexShader)
+    glDeleteShader(lineFragmentShader)
 
     colorUniform = glGetUniformLocation(shaderProgram, "color")
     transformUniform = glGetUniformLocation(shaderProgram, "transform")
@@ -271,6 +318,38 @@ class OpenGLGraphics extends GraphicsOpInterpreter {
     glBindVertexArray(0)
   }
 
+  private def drawLine(x1: Int, y1: Int, x2: Int, y2: Int): Unit = {
+    val vaoLine = glGenVertexArrays()
+    glBindVertexArray(vaoLine)
+
+    val vboLine = glGenBuffers()
+    glBindBuffer(GL_ARRAY_BUFFER, vboLine)
+
+    val vertices = BufferUtils.createFloatBuffer(6) // 2 vertices, each with 3 floats (x, y, z)
+    vertices.put(Array(
+      x1.toFloat, y1.toFloat, 0.0f, // first vertex
+      x2.toFloat, y2.toFloat, 0.0f  // second vertex
+    ))
+    vertices.flip()
+
+    glBufferData(GL_ARRAY_BUFFER, vertices, GL_STATIC_DRAW)
+    glVertexAttribPointer(0, 3, GL_FLOAT, false, 0, 0)
+    glEnableVertexAttribArray(0)
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0)
+    glBindVertexArray(0)
+
+    // Draw the line
+    glUseProgram(lineShaderProgram)
+    glBindVertexArray(vaoLine)
+    glDrawArrays(GL_LINES, 0, 2) // GL_LINES: each pair of vertices forms a line
+    glBindVertexArray(0)
+
+    // Clean up: delete the VBO and VAO
+    glDeleteBuffers(vboLine)
+    glDeleteVertexArrays(vaoLine)
+  }
+
   def interpret: GraphicsOp ~> EitherThrowable = new (GraphicsOp ~> EitherThrowable) {
     override def apply[A](fa: GraphicsOp[A]): EitherThrowable[A] = fa match {
       case SetColor(c) => Try(setColor(c)).toEither
@@ -283,6 +362,7 @@ class OpenGLGraphics extends GraphicsOpInterpreter {
       case GetFont() => Try(getFont).toEither
       case DrawImage(img, x, y, Some(Dimension(width, height)), _) => Try(drawImage(img, x, y, width, height)).map(_ => true).toEither
       case DrawImage(img, x, y, None, _) => Try(drawImage(img, x, y, img.width, img.height)).map(_ => true).toEither
+      case DrawLine(x1, y1, x2, y2) => Try(drawLine(x1, y1, x2, y2)).toEither
       case other => Left(new RuntimeException(s"Unsupported operation: $other"))
     }
   }
